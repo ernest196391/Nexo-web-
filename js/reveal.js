@@ -1,20 +1,10 @@
 (function () {
   'use strict';
 
-  // Acordeón de preguntas frecuentes
-  var faqQuestions = document.querySelectorAll('.faq-question');
-  faqQuestions.forEach(function (btn) {
-    var answer = btn.nextElementSibling;
-    btn.addEventListener('click', function () {
-      var isOpen = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!isOpen));
-      answer.style.maxHeight = isOpen ? '' : answer.scrollHeight + 'px';
-    });
-  });
-
-  // Animación sutil al hacer scroll
   var reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && reveals.length) {
+  if (!reveals.length) return;
+
+  if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
