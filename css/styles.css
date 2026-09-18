@@ -62,11 +62,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal, .hairline, .reveal-words .word-inner { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .flujo-paso { animation: none !important; }
   .area--bg .area-media { transition: none !important; }
   .area--bg:hover .area-media { transform: none !important; }
   .escenario-paso { animation: none !important; }
   .escenario-link::after { animation: none !important; opacity: 0 !important; }
+  .lab-item { transition-delay: 0s !important; }
+  .lab-media { transition: none !important; }
+  .lab-item:hover .lab-media { transform: none !important; }
 }
 
 /* ===== Grano sutil (calidad "invisible") ===== */
@@ -193,34 +195,6 @@ body::after {
 .section h2 { font-size: 1.6rem; max-width: 28ch; }
 @media (min-width: 700px) { .section h2 { font-size: 2.1rem; } }
 
-/* ===== Auditoría ===== */
-.auditoria { background: var(--bg-surface); }
-.auditoria-inner { margin-top: 28px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
-.auditoria-visual {
-  width: 100%; max-width: 420px; border-radius: var(--radius);
-  border: 1px solid var(--border); object-fit: cover;
-}
-.flujo {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-}
-.flujo-paso {
-  font-size: .82rem; font-weight: 700;
-  padding: 7px 12px; border-radius: 999px; background: var(--bg-card);
-  color: var(--text-primary); border: 1px solid var(--border);
-  animation: flujo-highlight 4.8s ease-in-out infinite;
-}
-.flujo-paso-final { background: var(--color-lime); color: var(--bg-page); border-color: var(--color-lime); animation: none; }
-.flujo-arrow { color: var(--color-terracotta); font-size: .9rem; }
-
-@keyframes flujo-highlight {
-  0%, 25%, 100% { background: var(--bg-card); color: var(--text-primary); border-color: var(--border); transform: scale(1); }
-  10% { background: var(--color-lime); color: var(--bg-page); border-color: var(--color-lime); transform: scale(1.08); }
-}
-
-@media (min-width: 700px) {
-  .auditoria-inner { flex-direction: row; align-items: center; gap: 32px; }
-}
-
 /* ===== Soluciones (6 áreas editoriales) ===== */
 .area-grid {
   margin-top: 28px;
@@ -335,11 +309,32 @@ body::after {
 @media (min-width: 980px) { .lab-grid { grid-template-columns: repeat(3, 1fr); } }
 .lab-item {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px;
+  border-radius: var(--radius); overflow: hidden;
+  transition: opacity .5s ease, transform .5s ease, border-color .3s ease, box-shadow .3s ease;
 }
-.lab-item h3 { color: var(--text-primary); font-size: 1.05rem; }
+.lab-item:nth-child(2) { transition-delay: 80ms; }
+.lab-item:nth-child(3) { transition-delay: 160ms; }
+.lab-item:nth-child(4) { transition-delay: 240ms; }
+.lab-item:nth-child(5) { transition-delay: 320ms; }
+.lab-item:nth-child(6) { transition-delay: 400ms; }
+.lab-item:hover { transition-delay: 0s; border-color: rgba(63,196,245,.45); box-shadow: 0 16px 32px rgba(0,0,0,.35); }
+
+.lab-media { height: 140px; background-size: cover; background-position: center; transition: transform .6s ease; }
+.lab-item:hover .lab-media { transform: scale(1.06); }
+
+#lab-product-studio .lab-media { background: linear-gradient(135deg, rgba(255,139,92,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-product-studio.webp") center/cover; }
+#lab-veci .lab-media { background: linear-gradient(135deg, rgba(63,196,245,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-veci.webp") center/cover; }
+#lab-cuadre .lab-media { background: linear-gradient(135deg, rgba(215,242,78,.22), rgba(20,28,48,.9)), url("../assets/lab/lab-cuadre.webp") center/cover; }
+#lab-gestores .lab-media { background: linear-gradient(135deg, rgba(63,196,245,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-gestores.webp") center/cover; }
+#lab-mensajeria .lab-media { background: linear-gradient(135deg, rgba(255,139,92,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-mensajeria.webp") center/cover; }
+#lab-commerce .lab-media { background: linear-gradient(135deg, rgba(215,242,78,.22), rgba(20,28,48,.9)), url("../assets/lab/lab-commerce.webp") center/cover; }
+
+.lab-body { padding: 18px 20px; }
+.lab-item h3 { color: var(--text-primary); font-size: 1.05rem; margin: 0 0 6px; }
 .lab-item p { color: var(--text-secondary); font-size: .92rem; margin: 0; }
 .lab-nota { margin-top: 24px; color: var(--text-secondary); font-size: .88rem; font-style: italic; }
+
+@media (min-width: 700px) { .lab-media { height: 168px; } }
 
 /* ===== NEXO Business OS ===== */
 .business-os { background: var(--bg-page); }
