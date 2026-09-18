@@ -1,7 +1,22 @@
 (function () {
   'use strict';
 
-  var reveals = document.querySelectorAll('.reveal');
+  document.querySelectorAll('.reveal-words').forEach(function (el) {
+    if (el.dataset.split === 'true') return;
+    var text = el.textContent;
+    el.textContent = '';
+    text.split(' ').forEach(function (word, i) {
+      if (i > 0) el.appendChild(document.createTextNode(' '));
+      var span = document.createElement('span');
+      span.className = 'word-inner';
+      span.style.transitionDelay = (i * 70) + 'ms';
+      span.textContent = word;
+      el.appendChild(span);
+    });
+    el.dataset.split = 'true';
+  });
+
+  var reveals = document.querySelectorAll('.reveal, .hairline, .reveal-words');
   if (!reveals.length) return;
 
   if ('IntersectionObserver' in window) {

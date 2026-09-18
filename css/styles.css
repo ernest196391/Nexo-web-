@@ -21,8 +21,8 @@
   --color-whatsapp: #25D366;
   --color-whatsapp-dark: #1DA851;
 
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --radius: 16px;
@@ -62,8 +62,33 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .reveal, .hairline, .reveal-words .word-inner { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* ===== Grano sutil (calidad "invisible") ===== */
+body::after {
+  content: "";
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: 0.035; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* ===== Hairlines animadas entre secciones clave ===== */
+.hairline {
+  display: block; height: 1px; width: min(420px, 60%);
+  margin: 0 auto 40px; transform: scaleX(0); transform-origin: center;
+  background: linear-gradient(90deg, transparent, var(--color-terracotta), transparent);
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+}
+.hairline.is-visible { transform: scaleX(1); }
+
+/* ===== Reveal palabra por palabra (solo hero, uso restringido) ===== */
+.reveal-words .word-inner {
+  display: inline-block; opacity: 0; transform: translateY(14px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal-words.is-visible .word-inner { opacity: 1; transform: none; }
 
 /* ===== Orbes decorativos (resplandor de fondo) ===== */
 .orb {
@@ -325,7 +350,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .planes-nota { margin-top: 24px; text-align: center; color: var(--text-secondary); font-size: .9rem; }
 
 /* ===== Contacto / intake ===== */
-.contacto { background: var(--bg-page); }
+.contacto { background: var(--bg-page); position: relative; overflow: hidden; }
+.contacto::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 20%), rgba(255, 139, 92, 0.16), transparent 70%);
+  opacity: 0; transition: opacity .4s ease;
+}
+.contacto.cursor-active::before { opacity: 1; }
+.contacto .wrap { position: relative; z-index: 1; }
 .contacto-lead { max-width: 62ch; color: var(--text-secondary); }
 .intake-form {
   margin-top: 28px; max-width: 560px; display: flex; flex-direction: column; gap: 18px;
