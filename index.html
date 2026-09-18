@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NEXO — Automatización, IA y software para negocios</title>
 <meta name="description" content="Digitalizamos y automatizamos empresas con ecommerce, WhatsApp, inteligencia artificial, aplicaciones a medida e integraciones diseñadas alrededor de cada negocio.">
-<meta name="theme-color" content="#0B2A5B">
+<meta name="theme-color" content="#05070D">
 <link rel="canonical" href="https://nexoweb.casavivadecuba.com">
 <link rel="icon" href="assets/logo-nexo-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -41,7 +44,7 @@
 <header class="site-header" id="inicio">
   <div class="wrap header-inner">
     <a href="#inicio" class="brand" aria-label="NEXO, inicio">
-      <img src="assets/logo-nexo.svg" alt="NEXO" class="brand-logo">
+      <img src="assets/logo-nexo-light.svg" alt="NEXO" class="brand-logo">
     </a>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menú">
@@ -58,6 +61,7 @@
       <a href="#casos">Casos</a>
       <a href="#nexo-lab">NEXO Lab</a>
       <a href="#nosotros">Nosotros</a>
+      <a href="#planes">Planes</a>
       <a href="#contacto">Contacto</a>
       <a
         class="btn btn-whatsapp nav-whatsapp"
@@ -77,6 +81,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="orb orb-bg" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <div class="hero-copy reveal">
         <p class="eyebrow">NEXO</p>
@@ -103,17 +108,18 @@
         </div>
       </div>
       <div class="hero-art reveal" aria-hidden="true">
+        <div class="orb orb-hero"></div>
         <svg viewBox="0 0 360 360" class="hero-svg">
-          <circle cx="180" cy="180" r="168" fill="var(--color-cream-dark)"/>
+          <circle cx="180" cy="180" r="168" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
+          <path d="M90 120 L180 180 M180 80 L180 180 M270 130 L180 180 M120 230 L180 180 M250 240 L180 180"
+                stroke="var(--color-blue)" stroke-width="1.5" opacity="0.45"/>
           <g class="hero-nodes">
             <circle cx="90" cy="120" r="7" fill="var(--color-blue)"/>
             <circle cx="180" cy="80" r="7" fill="var(--color-terracotta)"/>
             <circle cx="270" cy="130" r="7" fill="var(--color-blue)"/>
-            <circle cx="120" cy="230" r="7" fill="var(--color-navy)"/>
-            <circle cx="250" cy="240" r="7" fill="var(--color-terracotta)"/>
-            <circle cx="180" cy="180" r="10" fill="var(--color-navy)"/>
-            <path d="M90 120 L180 180 M180 80 L180 180 M270 130 L180 180 M120 230 L180 180 M250 240 L180 180"
-                  stroke="var(--color-navy)" stroke-width="2" opacity="0.35"/>
+            <circle cx="120" cy="230" r="7" fill="var(--color-terracotta)"/>
+            <circle cx="250" cy="240" r="7" fill="var(--color-blue)"/>
+            <circle cx="180" cy="180" r="10" fill="var(--color-terracotta)"/>
           </g>
         </svg>
       </div>
@@ -430,16 +436,67 @@
     </div>
   </section>
 
+  <!-- PLANES -->
+  <section class="section planes" id="planes">
+    <div class="wrap">
+      <p class="eyebrow reveal">Planes</p>
+      <h2 class="reveal">Elige por dónde empezar</h2>
+      <p class="planes-lead reveal">Auditamos primero para confirmar que el plan encaja con tu negocio, y de ahí arrancamos.</p>
+
+      <div class="planes-grid">
+        <article class="plan reveal">
+          <h3>Starter</h3>
+          <p class="plan-precio">$250 <span>setup</span></p>
+          <p class="plan-precio-sec">$125/mes + 10% comisión</p>
+          <p class="plan-desc">Para negocios que arrancan a vender online.</p>
+          <ul class="plan-incluye">
+            <li>Catálogo online con carrito</li>
+            <li>Automatización de WhatsApp 24/7</li>
+            <li>Soporte mensual</li>
+          </ul>
+          <a class="btn btn-ghost plan-cta" href="#contacto">Empezar con Starter</a>
+        </article>
+
+        <article class="plan plan-destacado reveal">
+          <span class="plan-badge">Más elegido</span>
+          <h3>Growth</h3>
+          <p class="plan-precio">$500 <span>setup</span></p>
+          <p class="plan-precio-sec">$150/mes + 8% comisión</p>
+          <p class="plan-desc">Para negocios que ya venden y quieren crecer.</p>
+          <ul class="plan-incluye">
+            <li>Todo lo de Starter</li>
+            <li>Puente de cobro: familia paga desde el exterior</li>
+            <li>Cuadre y control de entregas</li>
+          </ul>
+          <a class="btn btn-primary plan-cta" href="#contacto">Empezar con Growth</a>
+        </article>
+
+        <article class="plan reveal">
+          <h3>Full</h3>
+          <p class="plan-precio">$900 <span>setup</span></p>
+          <p class="plan-precio-sec">$250/mes + 6% comisión</p>
+          <p class="plan-desc">Para negocios que quieren automatizar todo.</p>
+          <ul class="plan-incluye">
+            <li>Todo lo de Growth</li>
+            <li>Avatar con IA y contenido automatizado</li>
+            <li>Apps a medida: gestores, mensajería, dashboards</li>
+          </ul>
+          <a class="btn btn-ghost plan-cta" href="#contacto">Empezar con Full</a>
+        </article>
+      </div>
+      <p class="planes-nota reveal">¿Tu caso no encaja en ninguno? Cuéntanos abajo y armamos algo a medida.</p>
+    </div>
+  </section>
+
   <!-- CONTACTO / AUDITORÍA -->
   <section class="section contacto" id="contacto">
     <div class="wrap">
       <p class="eyebrow reveal">Empecemos</p>
       <h2 class="reveal">Auditoría → Alcance → Propuesta</h2>
       <p class="contacto-lead reveal">
-        No vendemos un paquete fijo. Cada negocio tiene un punto de partida distinto,
-        así que empezamos por entender el tuyo, definimos el alcance real del trabajo,
-        y de ahí sale una propuesta concreta — con implementación, pruebas, métricas
-        y soporte incluidos.
+        Antes de arrancar, confirmamos que el plan elegido encaja con tu negocio.
+        Cuéntanos lo básico y seguimos por WhatsApp — con implementación, pruebas,
+        métricas y soporte incluidos.
       </p>
 
       <form class="intake-form reveal" id="intakeForm" data-event="audit_started">
@@ -493,7 +550,7 @@
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <img src="assets/logo-nexo.svg" alt="NEXO" class="footer-logo">
+    <img src="assets/logo-nexo-light.svg" alt="NEXO" class="footer-logo">
     <p>NEXO — Transformación digital, software e inteligencia artificial para negocios.</p>
   </div>
 </footer>
