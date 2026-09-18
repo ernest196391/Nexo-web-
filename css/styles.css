@@ -242,7 +242,8 @@ body::after {
   padding: 26px 0; border-top: 1px solid var(--border);
 }
 .area:last-of-type { border-bottom: 1px solid var(--border); }
-.area-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; }
+.area-head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.area-icon { width: 56px; height: 56px; object-fit: contain; flex-shrink: 0; border-radius: var(--radius-sm); }
 .area-num { font-family: var(--font-display); font-size: 1.3rem; color: var(--border); font-weight: 700; }
 .area-head h3 { font-size: 1.2rem; margin: 0; }
 .area-lista { color: var(--text-secondary); font-size: .98rem; max-width: 64ch; margin: 0; }
@@ -263,23 +264,6 @@ body::after {
   border-radius: 999px; padding: 6px 12px;
 }
 .escenario-arrow { color: var(--color-terracotta); font-size: .8rem; }
-
-/* ===== Casos ===== */
-.casos-nota { color: var(--text-secondary); max-width: 60ch; }
-.caso {
-  margin-top: 20px; padding: 22px; background: var(--bg-card);
-  border: 1px solid var(--border); border-radius: var(--radius);
-}
-.caso-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.caso-head h3 { margin: 0; font-size: 1.15rem; }
-.caso p { color: var(--text-secondary); font-size: .95rem; margin: 8px 0 0; }
-.caso-estado {
-  font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
-  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
-}
-.caso-estado-produccion { background: rgba(37, 211, 102, 0.16); color: var(--color-whatsapp); }
-.caso-estado-externo { background: rgba(63, 196, 245, 0.16); color: var(--color-blue); }
-.caso-link { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--color-terracotta); text-decoration: underline; font-size: .92rem; }
 
 /* ===== NEXO Lab ===== */
 .nexo-lab { background: var(--bg-surface); }
