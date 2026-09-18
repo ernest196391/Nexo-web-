@@ -259,7 +259,8 @@ body::after {
 }
 
 /* ===== Escenarios ===== */
-.escenarios { background: var(--bg-page); }
+.escenarios { background: var(--bg-page); padding-top: 36px; }
+.escenarios-title { margin-top: 0; }
 .escenario { margin-top: 40px; }
 .escenario:first-of-type { margin-top: 30px; }
 .escenario h3 { font-size: 1.15rem; margin-bottom: 16px; font-weight: 500; font-style: italic; color: var(--text-secondary); }
@@ -374,7 +375,9 @@ body::after {
 }
 .contacto.cursor-active::before { opacity: 1; }
 .contacto .wrap { position: relative; z-index: 1; }
+.eyebrow-center { text-align: center; }
 .contacto-lead { max-width: 62ch; color: var(--text-secondary); }
+.contacto-lead-center { text-align: center; margin-left: auto; margin-right: auto; }
 .intake-form {
   margin-top: 28px; max-width: 560px; display: flex; flex-direction: column; gap: 18px;
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
@@ -382,18 +385,28 @@ body::after {
 }
 .intake-field { display: flex; flex-direction: column; gap: 6px; border: none; padding: 0; margin: 0; }
 .intake-field label, .intake-field legend { font-weight: 700; font-size: .88rem; color: var(--text-primary); padding: 0; }
+.intake-legend-center { width: 100%; text-align: center; }
 .intake-field input[type="text"], .intake-field input[type="tel"], .intake-field textarea {
   font-family: var(--font-body); font-size: 1rem; padding: 11px 14px;
   border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: var(--bg-surface); color: var(--text-primary);
 }
 .intake-field textarea { resize: vertical; }
-.intake-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.intake-chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 8px; }
 .intake-chips label {
-  display: inline-flex; align-items: center; gap: 6px; font-weight: 500; font-size: .88rem;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 600; font-size: .86rem; text-align: center;
   color: var(--text-primary);
-  background: var(--bg-surface); border: 1px solid var(--border); border-radius: 999px;
-  padding: 6px 12px; cursor: pointer;
+  background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 11px 10px; cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+.intake-chips input[type="checkbox"] { accent-color: var(--color-lime); }
+.intake-chips label:has(input:checked) {
+  background: rgba(215, 242, 78, .12); border-color: var(--color-lime); color: var(--color-lime);
+}
+@media (min-width: 480px) {
+  .intake-chips { grid-template-columns: repeat(3, 1fr); }
 }
 .intake-submit { align-self: center; }
 .contacto-alt { margin-top: 16px; font-size: .92rem; color: var(--text-secondary); }
