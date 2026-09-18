@@ -65,6 +65,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .flujo-paso { animation: none !important; }
   .area--bg .area-media { transition: none !important; }
   .area--bg:hover .area-media { transform: none !important; }
+  .escenario-paso { animation: none !important; }
+  .escenario-link::after { animation: none !important; opacity: 0 !important; }
 }
 
 /* ===== Grano sutil (calidad "invisible") ===== */
@@ -284,16 +286,47 @@ body::after {
 
 /* ===== Escenarios ===== */
 .escenarios { background: var(--bg-page); }
-.escenario { margin-top: 34px; }
-.escenario:first-of-type { margin-top: 28px; }
-.escenario h3 { font-size: 1.15rem; margin-bottom: 14px; font-weight: 500; font-style: italic; color: var(--text-secondary); }
-.escenario-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.escenario-chain span:not(.escenario-arrow) {
+.escenario { margin-top: 40px; }
+.escenario:first-of-type { margin-top: 30px; }
+.escenario h3 { font-size: 1.15rem; margin-bottom: 16px; font-weight: 500; font-style: italic; color: var(--text-secondary); }
+.escenario-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 0; row-gap: 10px; }
+.escenario-paso {
   font-size: .85rem; font-weight: 600; color: var(--text-primary);
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 999px; padding: 6px 12px;
+  border-radius: 999px; padding: 7px 14px;
+  animation: escenario-highlight 4.8s ease-in-out infinite;
 }
-.escenario-arrow { color: var(--color-terracotta); font-size: .8rem; }
+.escenario-paso-final { background: var(--color-lime); color: var(--bg-page); border-color: var(--color-lime); animation: none; }
+.escenario-link {
+  position: relative; width: 26px; height: 2px; margin: 0 6px;
+  background: var(--border); flex-shrink: 0;
+}
+.escenario-link::after {
+  content: ""; position: absolute; top: 50%; left: 0; width: 6px; height: 6px; margin-top: -3px;
+  border-radius: 50%; background: var(--color-terracotta); opacity: 0;
+  animation: escenario-pulse 4.8s ease-in-out infinite;
+}
+.escenario-resultado { margin: 16px 0 0; font-size: .88rem; color: var(--color-lime); }
+
+@keyframes escenario-highlight {
+  0%, 25%, 100% { background: var(--bg-card); color: var(--text-primary); border-color: var(--border); transform: scale(1); }
+  10% { background: var(--color-lime); color: var(--bg-page); border-color: var(--color-lime); transform: scale(1.08); }
+}
+@keyframes escenario-pulse {
+  0%, 100% { opacity: 0; transform: translateX(0); }
+  4% { opacity: 1; transform: translateX(0); }
+  22% { opacity: 0; transform: translateX(20px); }
+}
+
+@media (min-width: 700px) {
+  .escenario-link { width: 40px; }
+  .escenario-link::after { animation-name: escenario-pulse-lg; }
+}
+@keyframes escenario-pulse-lg {
+  0%, 100% { opacity: 0; transform: translateX(0); }
+  4% { opacity: 1; transform: translateX(0); }
+  22% { opacity: 0; transform: translateX(34px); }
+}
 
 /* ===== NEXO Lab ===== */
 .nexo-lab { background: var(--bg-surface); }
