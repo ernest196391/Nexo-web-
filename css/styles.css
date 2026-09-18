@@ -69,6 +69,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .lab-item { transition-delay: 0s !important; }
   .lab-media { transition: none !important; }
   .lab-item:hover .lab-media { transform: none !important; }
+  .faq-item summary::after { transition: none !important; }
 }
 
 /* ===== Grano sutil (calidad "invisible") ===== */
@@ -172,7 +173,8 @@ body::after {
   color: var(--color-terracotta); margin: 0 0 10px;
 }
 .eyebrow-light { color: var(--color-blue); }
-.hero-copy h1 { font-size: 2.4rem; margin: 0; }
+.hero-copy h1 { font-size: 1.6rem; line-height: 1.3; margin: 0 auto; max-width: 24ch; }
+.hero-tags { margin: 16px auto 0; max-width: 40ch; color: var(--text-secondary); font-size: .88rem; }
 .hero-actions {
   display: flex; flex-direction: row; flex-wrap: wrap;
   justify-content: center; gap: 10px; margin-top: 28px;
@@ -185,7 +187,8 @@ body::after {
 }
 @media (min-width: 700px) {
   .hero { min-height: 560px; }
-  .hero-copy h1 { font-size: 3.6rem; }
+  .hero-copy h1 { font-size: 2.5rem; max-width: 34ch; }
+  .hero-tags { font-size: 1rem; }
   .hero-actions .btn-lg { padding: 16px 30px; font-size: 1.05rem; }
 }
 
@@ -194,6 +197,21 @@ body::after {
 .hero { scroll-margin-top: 70px; }
 .section h2 { font-size: 1.6rem; max-width: 28ch; }
 @media (min-width: 700px) { .section h2 { font-size: 2.1rem; } }
+
+/* ===== CTA repetida ===== */
+.cta-repeat { margin-top: 32px; text-align: center; }
+
+/* ===== Cómo funciona ===== */
+.como-funciona { background: var(--bg-surface); }
+.pasos-grid { margin-top: 28px; display: grid; gap: 20px; grid-template-columns: 1fr; }
+.paso-num {
+  display: block; font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+  color: var(--color-lime); margin-bottom: 8px;
+}
+.paso h3 { font-size: 1.05rem; margin: 0 0 6px; }
+.paso p { margin: 0; color: var(--text-secondary); font-size: .92rem; }
+@media (min-width: 620px) { .pasos-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 980px) { .pasos-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
 
 /* ===== Soluciones (6 áreas editoriales) ===== */
 .area-grid {
@@ -365,6 +383,25 @@ body::after {
 .plan-incluye li::before { content: "✓"; position: absolute; left: 0; color: var(--color-blue); font-weight: 700; }
 .plan-cta { width: 100%; }
 .planes-nota { margin-top: 24px; text-align: center; color: var(--text-secondary); font-size: .9rem; }
+
+/* ===== FAQ ===== */
+.faq { background: var(--bg-page); }
+.faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; max-width: 720px; }
+.faq-item {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+.faq-item summary {
+  cursor: pointer; font-weight: 700; color: var(--text-primary); font-size: .98rem;
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+"; font-size: 1.3rem; line-height: 1; color: var(--color-lime); flex-shrink: 0;
+  transition: transform .2s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p { margin: 12px 0 0; color: var(--text-secondary); font-size: .92rem; line-height: 1.55; }
 
 /* ===== Contacto / intake ===== */
 .contacto { background: var(--bg-page); position: relative; overflow: hidden; }
