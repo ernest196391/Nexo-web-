@@ -16,6 +16,8 @@
   --color-blue: #3FC4F5;
   --color-terracotta: #FF8B5C;
   --color-terracotta-dark: #E2703A;
+  --color-lime: #D7F24E;
+  --color-lime-dim: #A8BC3A;
   --color-whatsapp: #25D366;
   --color-whatsapp-dark: #1DA851;
 
@@ -55,7 +57,7 @@ ul, ol { margin: 0; padding: 0; }
 .skip-link:focus { left: 20px; top: 20px; }
 
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 3px solid var(--color-blue); outline-offset: 2px;
+  outline: 3px solid var(--color-lime); outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,8 +93,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .btn:active { transform: scale(0.97); }
 .btn-lg { padding: 16px 30px; font-size: 1.05rem; }
-.btn-primary { background: var(--color-terracotta-dark); color: var(--text-inverse); box-shadow: var(--shadow); }
-.btn-primary:hover { background: var(--color-terracotta); }
+.btn-primary { background: var(--color-lime); color: var(--bg-page); box-shadow: var(--shadow); }
+.btn-primary:hover { background: var(--color-lime-dim); }
 .btn-ghost { background: transparent; color: var(--text-primary); border: 1.5px solid var(--border); }
 .btn-ghost:hover { border-color: var(--color-blue); }
 .btn-whatsapp { background: var(--color-whatsapp); color: var(--text-inverse); box-shadow: var(--shadow); }
@@ -206,7 +208,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding: 7px 12px; border-radius: 999px; background: var(--bg-card);
   color: var(--text-primary); border: 1px solid var(--border);
 }
-.flujo-paso-final { background: var(--color-terracotta-dark); color: var(--text-inverse); border-color: var(--color-terracotta-dark); }
+.flujo-paso-final { background: var(--color-lime); color: var(--bg-page); border-color: var(--color-lime); }
 .flujo-arrow { color: var(--color-terracotta); font-size: .9rem; }
 
 /* ===== Soluciones (6 áreas editoriales) ===== */
@@ -302,12 +304,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column;
 }
 .plan-destacado {
-  border-color: var(--color-terracotta-dark);
-  box-shadow: 0 0 0 1px var(--color-terracotta-dark), var(--shadow);
+  border-color: var(--color-lime);
+  box-shadow: 0 0 0 1px var(--color-lime), var(--shadow);
 }
 .plan-badge {
   position: absolute; top: -12px; left: 26px;
-  background: var(--color-terracotta-dark); color: var(--text-inverse);
+  background: var(--color-lime); color: var(--bg-page);
   font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
   padding: 4px 12px; border-radius: 999px;
 }
