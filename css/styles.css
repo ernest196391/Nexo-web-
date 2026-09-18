@@ -201,6 +201,23 @@ body::after {
 /* ===== CTA repetida ===== */
 .cta-repeat { margin-top: 32px; text-align: center; }
 
+/* ===== Resultados / Portfolio ===== */
+.portfolio { background: var(--bg-surface); }
+.portfolio-lead { margin-top: 4px; color: var(--text-secondary); max-width: 60ch; }
+.portfolio-grid { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: 1fr; }
+.portfolio-item {
+  background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--color-terracotta);
+  border-radius: var(--radius); padding: 32px 24px; text-align: center;
+}
+.portfolio-item .portfolio-media {
+  height: 140px; margin: -32px -24px 20px; background-size: cover; background-position: center;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+#portfolio-mercado2328 { border-top-color: var(--color-blue); }
+#portfolio-cuyana { border-top-color: var(--color-lime); }
+.portfolio-name { margin: 0; font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+@media (min-width: 700px) { .portfolio-grid { grid-template-columns: repeat(3, 1fr); } }
+
 /* ===== Cómo funciona ===== */
 .como-funciona { background: var(--bg-surface); }
 .pasos-grid { margin-top: 28px; display: grid; gap: 20px; grid-template-columns: 1fr; }
