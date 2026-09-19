@@ -87,6 +87,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hiw-card { opacity: .38 !important; }
   .hiw-sweep { opacity: 1 !important; }
   .hiw-rail-fill { transition: none !important; }
+  /* Los logos se ven completos y quietos: sin barridos, sin recortes, sin desenfoque. */
+  .reveal-brand .brand-body,
+  .reveal-brand .brand-tile,
+  .reveal-brand .brand-tile img {
+    animation: none !important; opacity: 1 !important;
+    transform: none !important; filter: none !important;
+    clip-path: none !important; transition: none !important;
+  }
+  .brand-edge, .brand-sweep, .brand-line { animation: none !important; opacity: 0 !important; }
+  .brand-tile img { transition: none !important; }
+  .brand-card:hover .brand-tile img,
+  .brand-card:focus-within .brand-tile img { scale: 1 !important; }
 }
 
 /* ===== Grano sutil (calidad "invisible") ===== */
@@ -225,26 +237,129 @@ body::after {
 /* ===== Resultados / Portfolio ===== */
 .portfolio { background: var(--bg-surface); }
 .portfolio-lead { margin-top: 4px; color: var(--text-secondary); max-width: 60ch; }
-.portfolio-grid { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: repeat(2, 1fr); }
+.portfolio-grid { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: 1fr; }
 .brand-card {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px; text-align: center;
-  transition: opacity .5s ease, transform .5s ease, border-color .3s ease;
+  border-radius: var(--radius); padding: 16px;
+  transition: opacity .35s ease, transform .35s ease, border-color .3s ease, box-shadow .35s ease;
 }
-.brand-card:hover { border-color: rgba(63, 196, 245, .4); }
 .brand-tile {
-  display: flex; align-items: center; justify-content: center;
-  height: 88px; padding: 14px; overflow: hidden;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  height: 96px; padding: 14px; overflow: hidden;
   background: #F4F6FA; border-radius: var(--radius-sm);
 }
-.brand-tile img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+/* Los logos mantienen su proporción original: contain, nunca cover. */
+/* El hover usa `scale` (propiedad independiente) para no chocar con el `transform`
+   que las animaciones de entrada dejan fijado con animation-fill-mode. */
+.brand-tile img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
+  transition: scale .35s ease;
+}
 /* Cuyana trae su propio fondo granate: el tile lo continúa en vez de recortarlo. */
 .brand-tile--bleed { padding: 0; background: linear-gradient(180deg, #650E26 0%, #4E0719 100%); }
-.brand-tile--bleed img { width: 100%; height: 100%; object-fit: contain; max-height: none; }
-.brand-name { margin: 12px 0 0; font-size: .92rem; font-weight: 700; color: var(--text-primary); }
-@media (min-width: 700px) {
-  .portfolio-grid { grid-template-columns: repeat(4, 1fr); }
-  .brand-tile { height: 104px; }
+.brand-tile--bleed img { width: 100%; height: 100%; max-height: none; }
+.brand-body { margin-top: 14px; }
+.brand-name { margin: 0; font-size: .95rem; font-weight: 700; color: var(--text-primary); }
+.brand-desc { margin: 6px 0 0; font-size: .86rem; line-height: 1.5; color: var(--text-secondary); }
+
+/* -- Entradas por marca (una sola vez, al entrar en viewport) -- */
+.reveal-brand .brand-body { opacity: 0; transform: translateY(10px); }
+.reveal-brand.is-visible .brand-body {
+  animation: brand-body-in .6s .35s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes brand-body-in { to { opacity: 1; transform: none; } }
+
+/* Casa Viva: aparece enfocándose, con un acento cálido que recorre el borde una vez */
+.brand--casaviva .brand-tile img { opacity: 0; transform: scale(.94); filter: blur(6px); }
+.brand--casaviva.is-visible .brand-tile img {
+  animation: brand-focus .8s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes brand-focus {
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+.brand-edge {
+  position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; opacity: 0;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.brand-edge::before {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 170%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(from 0turn, transparent 0 60%, rgba(255, 139, 92, .95) 76%, transparent 90%);
+}
+.brand--casaviva.is-visible .brand-edge { animation: brand-edge-on 1.9s .45s ease-out forwards; }
+.brand--casaviva.is-visible .brand-edge::before { animation: brand-edge-spin 1.5s .45s ease-in-out forwards; }
+@keyframes brand-edge-on {
+  0% { opacity: 0; } 12% { opacity: 1; } 72% { opacity: 1; } 100% { opacity: 0; }
+}
+@keyframes brand-edge-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Mercado 23 y 28: el logo se revela en horizontal y el tile da un pulso al terminar */
+.brand--mercado .brand-tile img { clip-path: inset(0 100% 0 0); }
+.brand--mercado.is-visible .brand-tile img { animation: brand-wipe .75s .1s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes brand-wipe { to { clip-path: inset(0 0 0 0); } }
+.brand--mercado.is-visible .brand-tile { animation: brand-pulse .7s .85s ease-out 1; }
+@keyframes brand-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(63, 196, 245, 0); }
+  35% { box-shadow: 0 0 0 4px rgba(63, 196, 245, .28); }
+  100% { box-shadow: 0 0 0 0 rgba(63, 196, 245, 0); }
+}
+
+/* Cuyana: entra lateralmente y recibe un destello de luz, una sola vez */
+.brand--cuyana .brand-tile img { opacity: 0; transform: translateX(-12px); }
+.brand--cuyana.is-visible .brand-tile img { animation: brand-slide .7s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes brand-slide { to { opacity: 1; transform: none; } }
+.brand-sweep {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .22) 50%, transparent 62%);
+  transform: translateX(-100%);
+}
+.brand--cuyana.is-visible .brand-sweep { animation: brand-sweep-run 1.25s .5s ease-out forwards; }
+@keyframes brand-sweep-run {
+  0% { opacity: 0; transform: translateX(-100%); }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+/* Zaldívar: una línea recorre el tile y va descubriendo el logotipo completo */
+.brand--zaldivar .brand-tile img { opacity: 0; transform: translateX(-10px); clip-path: inset(0 100% 0 0); }
+.brand--zaldivar.is-visible .brand-tile img { animation: brand-build .85s .15s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes brand-build {
+  0% { opacity: 0; transform: translateX(-10px); clip-path: inset(0 100% 0 0); }
+  100% { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+.brand-line { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.brand-line::before {
+  content: ""; position: absolute; top: 8%; bottom: 8%; left: 0; width: 2px;
+  background: linear-gradient(180deg, transparent, #12305C 35%, #12305C 65%, transparent);
+}
+.brand--zaldivar.is-visible .brand-line { animation: brand-line-run 1s .15s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes brand-line-run {
+  0% { opacity: 0; transform: translateX(0); }
+  12% { opacity: .9; }
+  80% { opacity: .9; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+@media (min-width: 620px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) {
+  .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .brand-tile { height: 112px; }
+}
+/* Showcase: el proyecto enfocado gana presencia, los otros bajan sin desaparecer. */
+@media (hover: hover) and (min-width: 620px) {
+  .portfolio-grid:hover .brand-card,
+  .portfolio-grid:focus-within .brand-card { opacity: .65; }
+  .portfolio-grid:hover .brand-card:hover,
+  .portfolio-grid:focus-within .brand-card:focus-within {
+    opacity: 1; transform: translateY(-4px);
+    border-color: rgba(63, 196, 245, .4); box-shadow: 0 14px 30px rgba(0, 0, 0, .32);
+  }
+  .brand-card:hover .brand-tile img,
+  .brand-card:focus-within .brand-tile img { scale: 1.02; }
 }
 
 /* ===== Cómo funciona (experiencia narrativa) ===== */

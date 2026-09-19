@@ -23,6 +23,13 @@
 
 <link rel="stylesheet" href="css/styles.css">
 
+<noscript><style>
+  .reveal, .hairline, .reveal-words .word-inner { opacity: 1 !important; transform: none !important; }
+  .reveal-brand .brand-body, .reveal-brand .brand-tile img {
+    opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important;
+  }
+</style></noscript>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -103,29 +110,47 @@
       <h2 class="reveal">Negocios que ya construimos</h2>
       <p class="portfolio-lead reveal">Marcas reales funcionando con el sistema NEXO.</p>
       <div class="portfolio-grid">
-        <article class="brand-card reveal" id="portfolio-casaviva">
+        <article class="brand-card brand--casaviva reveal-brand" id="portfolio-casaviva">
           <span class="brand-tile">
             <img src="assets/brands/casa-viva.webp" width="801" height="700" loading="lazy" decoding="async" alt="Casa Viva">
+            <span class="brand-edge" aria-hidden="true"></span>
           </span>
-          <p class="brand-name">Casa Viva</p>
+          <div class="brand-body">
+            <p class="brand-name">Casa Viva</p>
+            <p class="brand-desc">Comercio, catálogo, pedidos y operación digital.</p>
+          </div>
         </article>
-        <article class="brand-card reveal" id="portfolio-mercado2328">
+
+        <article class="brand-card brand--mercado reveal-brand" id="portfolio-mercado2328">
           <span class="brand-tile">
             <img src="assets/brands/mercado-23-y-28.webp" width="178" height="215" loading="lazy" decoding="async" alt="Mercado 23 y 28">
           </span>
-          <p class="brand-name">Mercado 23 y 28</p>
+          <div class="brand-body">
+            <p class="brand-name">Mercado 23 y 28</p>
+            <p class="brand-desc">Tienda digital, checkout, mensajería y asistente Veci.</p>
+          </div>
         </article>
-        <article class="brand-card reveal" id="portfolio-cuyana">
+
+        <article class="brand-card brand--cuyana reveal-brand" id="portfolio-cuyana">
           <span class="brand-tile brand-tile--bleed">
             <img src="assets/brands/cuyana.webp" width="1057" height="402" loading="lazy" decoding="async" alt="Cuyana">
+            <span class="brand-sweep" aria-hidden="true"></span>
           </span>
-          <p class="brand-name">Cuyana</p>
+          <div class="brand-body">
+            <p class="brand-name">Cuyana</p>
+            <p class="brand-desc">Remesas, comercio y operación conectada entre Guyana y Cuba.</p>
+          </div>
         </article>
-        <article class="brand-card reveal" id="portfolio-zaldivar">
+
+        <article class="brand-card brand--zaldivar reveal-brand" id="portfolio-zaldivar">
           <span class="brand-tile">
             <img src="assets/brands/zaldivar.webp" width="1400" height="383" loading="lazy" decoding="async" alt="Zaldívar">
+            <span class="brand-line" aria-hidden="true"></span>
           </span>
-          <p class="brand-name">Zaldívar</p>
+          <div class="brand-body">
+            <p class="brand-name">Zaldívar</p>
+            <p class="brand-desc">Plataforma de servicios para resolver necesidades familiares desde Europa.</p>
+          </div>
         </article>
       </div>
     </div>
