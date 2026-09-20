@@ -8,6 +8,24 @@ Es vectorial, así que el logo y el texto no pixelan a ningún tamaño.
 Si la imprenta solo acepta imágenes, dale los dos PNG de esa misma carpeta
 (`-sangrado-300ppp.png`). Son el mismo diseño rasterizado a 300 ppp.
 
+### Para imprimir en una copistería normal
+
+Si no vas a una imprenta sino a una copistería, usa las hojas ya montadas:
+
+- `imprimir/tarjetas-por-hoja-a4.pdf` — **10 tarjetas** por hoja A4.
+- `imprimir/tarjetas-por-hoja-carta.pdf` — **8 tarjetas** por hoja tamaño carta.
+
+Las dos tienen dos páginas: la 1 son los frentes y la 2 los dorsos. Se imprime
+a doble cara y se corta por las marcas grises de los bordes.
+
+Dos avisos que hay que dar en el mostrador:
+
+- **Imprimir al 100%**, sin "ajustar a la página". Si se escala, las tarjetas
+  dejan de medir 85 × 55 mm.
+- **A doble cara.** Da igual si el papel gira por el lado largo o por el corto:
+  la retícula está centrada en la hoja, así que el dorso cuadra con el frente
+  de las dos formas.
+
 ## Especificaciones
 
 | | |
