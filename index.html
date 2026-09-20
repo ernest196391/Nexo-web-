@@ -59,11 +59,8 @@
     </button>
 
     <nav class="site-nav" id="siteNav" data-state="closed">
-      <a href="#soluciones">Soluciones</a>
-      <a href="#ia-automatizacion">IA y Automatización</a>
-      <a href="#commerce">Commerce</a>
-      <a href="#apps">Apps</a>
-      <a href="#nexo-lab">NEXO Lab</a>
+      <a href="#portfolio">Negocios</a>
+      <a href="#nexo-lab">Qué hacemos</a>
       <a href="#planes">Planes</a>
       <a href="#contacto">Contacto</a>
       <a
@@ -97,8 +94,8 @@
           >
             Auditar mi negocio gratis
           </a>
-          <a class="btn btn-ghost btn-lg" href="#soluciones">
-            Ver soluciones
+          <a class="btn btn-ghost btn-lg" href="#nexo-lab">
+            Ver lo que hacemos
           </a>
         </div>
       </div>
@@ -147,9 +144,6 @@
   <!-- CÓMO FUNCIONA -->
   <section class="section hiw" id="como-funciona">
     <div class="wrap">
-      <h2 class="reveal">Cómo funciona</h2>
-      <p class="hiw-lead reveal">Entender, diseñar, construir y mejorar. En ese orden.</p>
-
       <div class="hiw-track">
         <nav class="hiw-rail" aria-label="Pasos del proceso">
           <div class="hiw-rail-inner">
@@ -280,66 +274,6 @@
     </div>
   </section>
 
-  <!-- SOLUCIONES (6 áreas editoriales) -->
-  <section class="section soluciones" id="soluciones">
-    <div class="wrap">
-      <h2 class="reveal">Entender primero, construir después.</h2>
-
-      <div class="area-grid">
-        <article class="area area--bg reveal" id="auditoria-estrategia">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>Auditoría &amp; Estrategia</h3>
-            <p>Diagnóstico, mapa de procesos, roadmap de IA.</p>
-          </div>
-        </article>
-
-        <article class="area area--left reveal" id="commerce">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>Commerce</h3>
-            <p>Tienda, catálogo, checkout, inventario.</p>
-          </div>
-        </article>
-
-        <article class="area area--right reveal" id="ia-automatizacion">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>IA &amp; Automatización</h3>
-            <p>Agentes, workflows, RAG, integraciones.</p>
-          </div>
-        </article>
-
-        <article class="area area--bg reveal" id="whatsapp-clientes">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>WhatsApp &amp; Clientes</h3>
-            <p>Ventas, pedidos, CRM, atención con IA.</p>
-          </div>
-        </article>
-
-        <article class="area area--left reveal" id="apps">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>Apps &amp; Sistemas</h3>
-            <p>Apps a medida, dashboards, gestión interna.</p>
-          </div>
-        </article>
-
-        <article class="area area--right reveal" id="growth-ia">
-          <div class="area-media" aria-hidden="true"></div>
-          <div class="area-copy">
-            <h3>Growth con IA</h3>
-            <p>Contenido, video, avatares, SEO.</p>
-          </div>
-        </article>
-      </div>
-      <p class="cta-repeat reveal">
-        <a class="btn btn-ghost" href="#contacto" data-event="cta_repeat_click" data-event-source="soluciones">Auditar mi negocio gratis</a>
-      </p>
-    </div>
-  </section>
-
   <!-- LO QUE PODEMOS CONSTRUIR (escenarios) -->
   <section class="section escenarios">
     <div class="wrap">
@@ -359,22 +293,6 @@
           <span class="escenario-paso escenario-paso-final">Seguimiento</span>
         </div>
         <p class="escenario-resultado">Resultado: responde en segundos, no en horas.</p>
-      </div>
-
-      <div class="escenario reveal">
-        <h3>"Llega mercancía nueva y hay que subirla ya."</h3>
-        <div class="escenario-chain">
-          <span class="escenario-paso" style="animation-delay:0s">Fotografía</span>
-          <span class="escenario-link" style="animation-delay:0s" aria-hidden="true"></span>
-          <span class="escenario-paso" style="animation-delay:1.2s">Identificación</span>
-          <span class="escenario-link" style="animation-delay:1.2s" aria-hidden="true"></span>
-          <span class="escenario-paso" style="animation-delay:2.4s">Precio</span>
-          <span class="escenario-link" style="animation-delay:2.4s" aria-hidden="true"></span>
-          <span class="escenario-paso" style="animation-delay:3.6s">Descripción</span>
-          <span class="escenario-link" style="animation-delay:3.6s" aria-hidden="true"></span>
-          <span class="escenario-paso escenario-paso-final">Publicación</span>
-        </div>
-        <p class="escenario-resultado">Resultado: listo para vender el mismo día.</p>
       </div>
 
       <div class="escenario reveal">
@@ -647,20 +565,22 @@
       <p class="contacto-lead contacto-lead-center reveal">Cuéntanos lo básico y seguimos por WhatsApp.</p>
 
       <form class="intake-form reveal" id="intakeForm" data-event="audit_started">
-        <div class="intake-field">
-          <label for="intakeNombre">Nombre</label>
-          <input type="text" id="intakeNombre" name="nombre" required autocomplete="name">
-        </div>
-        <div class="intake-field">
-          <label for="intakeNegocio">Negocio</label>
-          <input type="text" id="intakeNegocio" name="negocio" required autocomplete="organization">
+        <div class="intake-row">
+          <div class="intake-field">
+            <label for="intakeNombre">Nombre</label>
+            <input type="text" id="intakeNombre" name="nombre" required autocomplete="name">
+          </div>
+          <div class="intake-field">
+            <label for="intakeNegocio">Negocio</label>
+            <input type="text" id="intakeNegocio" name="negocio" required autocomplete="organization">
+          </div>
         </div>
         <div class="intake-field">
           <label for="intakeWhatsapp">WhatsApp</label>
-          <input type="tel" id="intakeWhatsapp" name="whatsapp" required autocomplete="tel" placeholder="+53...">
+          <input type="tel" id="intakeWhatsapp" name="whatsapp" required autocomplete="tel" placeholder="+53 5 000 0000">
         </div>
         <fieldset class="intake-field">
-          <legend class="intake-legend-center">¿Qué te gustaría mejorar? (opcional)</legend>
+          <legend class="intake-legend-center">¿Qué quieres mejorar? (opcional)</legend>
           <div class="intake-chips">
             <label><input type="checkbox" name="area" value="Ventas"> Ventas</label>
             <label><input type="checkbox" name="area" value="Pedidos"> Pedidos</label>
@@ -672,8 +592,8 @@
           </div>
         </fieldset>
         <div class="intake-field">
-          <label for="intakeMensaje">Cuéntanos qué te gustaría mejorar</label>
-          <textarea id="intakeMensaje" name="mensaje" rows="4" required></textarea>
+          <label for="intakeMensaje">Cuéntanos tu caso</label>
+          <textarea id="intakeMensaje" name="mensaje" rows="4" required placeholder="Qué vendes, cómo atiendes hoy y qué te está costando más."></textarea>
         </div>
         <button type="submit" class="btn btn-primary btn-lg intake-submit">
           Enviar por WhatsApp
