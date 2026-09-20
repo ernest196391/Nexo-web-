@@ -16,7 +16,7 @@
     el.dataset.split = 'true';
   });
 
-  var reveals = document.querySelectorAll('.reveal, .hairline, .reveal-words, .reveal-brand');
+  var reveals = document.querySelectorAll('.reveal, .hairline, .reveal-words');
   if (!reveals.length) return;
 
   if ('IntersectionObserver' in window) {

@@ -87,18 +87,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hiw-card { opacity: .38 !important; }
   .hiw-sweep { opacity: 1 !important; }
   .hiw-rail-fill { transition: none !important; }
-  /* Los logos se ven completos y quietos: sin barridos, sin recortes, sin desenfoque. */
-  .reveal-brand .brand-body,
-  .reveal-brand .brand-tile,
-  .reveal-brand .brand-tile img {
+  /* Los logos se ven completos y quietos: sin barridos, sin recortes, sin desenfoque,
+     y las cuatro tarjetas al 100 % (sin foco que cambie con el scroll). */
+  .brand-card .brand-body,
+  .brand-card .brand-tile,
+  .brand-card .brand-tile img {
     animation: none !important; opacity: 1 !important;
     transform: none !important; filter: none !important;
     clip-path: none !important; transition: none !important;
   }
   .brand-edge, .brand-sweep, .brand-line { animation: none !important; opacity: 0 !important; }
-  .brand-tile img { transition: none !important; }
+  .portfolio-grid.is-ready.has-focus .brand-card,
+  .portfolio-grid.is-ready .brand-card.is-focus {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+  .brand-glow { transition: none !important; }
   .brand-card:hover .brand-tile img,
-  .brand-card:focus-within .brand-tile img { scale: 1 !important; }
+  .brand-card:focus-within .brand-tile img,
+  .brand-card.is-focus .brand-tile img { scale: 1 !important; }
 }
 
 /* ===== Grano sutil (calidad "invisible") ===== */
@@ -239,39 +245,61 @@ body::after {
 .portfolio-lead { margin-top: 4px; color: var(--text-secondary); max-width: 60ch; }
 .portfolio-grid { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: 1fr; }
 .brand-card {
-  background: var(--bg-card); border: 1px solid var(--border);
+  position: relative; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 16px;
-  transition: opacity .35s ease, transform .35s ease, border-color .3s ease, box-shadow .35s ease;
+  transition: opacity .45s ease, transform .45s cubic-bezier(.16,1,.3,1),
+              border-color .45s ease, box-shadow .45s ease;
 }
+/* Cada marca aporta su propio acento; el resto de la tarjeta se mantiene sobrio. */
+.brand--casaviva { --accent: 150, 214, 184; }
+.brand--mercado  { --accent: 0, 190, 200; }
+.brand--cuyana   { --accent: 216, 144, 48; }
+.brand--zaldivar { --accent: 0, 200, 150; }
+
 .brand-tile {
   position: relative; display: flex; align-items: center; justify-content: center;
-  height: 96px; padding: 14px; overflow: hidden;
-  background: #F4F6FA; border-radius: var(--radius-sm);
+  height: 104px; padding: 18px 20px; overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(158deg, #1B2440 0%, #0E1526 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
 }
-/* Los logos mantienen su proporción original: contain, nunca cover. */
-/* El hover usa `scale` (propiedad independiente) para no chocar con el `transform`
+/* Los logos mantienen su proporción original: contain, nunca cover.
+   El hover usa `scale` (propiedad independiente) para no chocar con el `transform`
    que las animaciones de entrada dejan fijado con animation-fill-mode. */
 .brand-tile img {
+  position: relative; z-index: 1;
   max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
-  transition: scale .35s ease;
+  transition: scale .45s cubic-bezier(.16,1,.3,1);
 }
-/* Cuyana trae su propio fondo granate: el tile lo continúa en vez de recortarlo. */
-.brand-tile--bleed { padding: 0; background: linear-gradient(180deg, #650E26 0%, #4E0719 100%); }
-.brand-tile--bleed img { width: 100%; height: 100%; max-height: none; }
+/* Halo del color de la marca: apagado en reposo, respira al tomar el foco. */
+.brand-glow {
+  position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease;
+  background: radial-gradient(120% 90% at 50% 115%, rgba(var(--accent), .22), transparent 70%);
+}
 .brand-body { margin-top: 14px; }
 .brand-name { margin: 0; font-size: .95rem; font-weight: 700; color: var(--text-primary); }
 .brand-desc { margin: 6px 0 0; font-size: .86rem; line-height: 1.5; color: var(--text-secondary); }
 
-/* -- Entradas por marca (una sola vez, al entrar en viewport) -- */
-.reveal-brand .brand-body { opacity: 0; transform: translateY(10px); }
-.reveal-brand.is-visible .brand-body {
-  animation: brand-body-in .6s .35s cubic-bezier(.16,1,.3,1) forwards;
+/* -- Tarjeta con el foco: gana presencia; las demás ceden sin desaparecer -- */
+.portfolio-grid.is-ready.has-focus .brand-card { opacity: .62; }
+.portfolio-grid.is-ready .brand-card.is-focus {
+  opacity: 1; transform: translateY(-4px);
+  border-color: rgba(var(--accent), .45);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .38), 0 0 0 1px rgba(var(--accent), .12);
+}
+.brand-card.is-focus .brand-glow { opacity: 1; }
+.brand-card.is-focus .brand-tile img { scale: 1.02; }
+
+/* -- Entrada, una sola vez -- */
+.is-ready .brand-card .brand-body { opacity: 0; transform: translateY(10px); }
+.is-ready .brand-card.is-in .brand-body {
+  animation: brand-body-in .6s .3s cubic-bezier(.16,1,.3,1) forwards;
 }
 @keyframes brand-body-in { to { opacity: 1; transform: none; } }
 
 /* Casa Viva: aparece enfocándose, con un acento cálido que recorre el borde una vez */
-.brand--casaviva .brand-tile img { opacity: 0; transform: scale(.94); filter: blur(6px); }
-.brand--casaviva.is-visible .brand-tile img {
+.is-ready .brand--casaviva .brand-tile img { opacity: 0; transform: scale(.94); filter: blur(6px); }
+.is-ready .brand--casaviva.is-in .brand-tile img {
   animation: brand-focus .8s cubic-bezier(.16,1,.3,1) forwards;
 }
 @keyframes brand-focus {
@@ -289,34 +317,34 @@ body::after {
   width: 170%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(0deg);
   background: conic-gradient(from 0turn, transparent 0 60%, rgba(255, 139, 92, .95) 76%, transparent 90%);
 }
-.brand--casaviva.is-visible .brand-edge { animation: brand-edge-on 1.9s .45s ease-out forwards; }
-.brand--casaviva.is-visible .brand-edge::before { animation: brand-edge-spin 1.5s .45s ease-in-out forwards; }
+.is-ready .brand--casaviva.is-in .brand-edge { animation: brand-edge-on 1.9s .45s ease-out forwards; }
+.is-ready .brand--casaviva.is-in .brand-edge::before { animation: brand-edge-spin 1.5s .45s ease-in-out forwards; }
 @keyframes brand-edge-on {
   0% { opacity: 0; } 12% { opacity: 1; } 72% { opacity: 1; } 100% { opacity: 0; }
 }
 @keyframes brand-edge-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
 /* Mercado 23 y 28: el logo se revela en horizontal y el tile da un pulso al terminar */
-.brand--mercado .brand-tile img { clip-path: inset(0 100% 0 0); }
-.brand--mercado.is-visible .brand-tile img { animation: brand-wipe .75s .1s cubic-bezier(.16,1,.3,1) forwards; }
+.is-ready .brand--mercado .brand-tile img { clip-path: inset(0 100% 0 0); }
+.is-ready .brand--mercado.is-in .brand-tile img { animation: brand-wipe .75s .1s cubic-bezier(.16,1,.3,1) forwards; }
 @keyframes brand-wipe { to { clip-path: inset(0 0 0 0); } }
-.brand--mercado.is-visible .brand-tile { animation: brand-pulse .7s .85s ease-out 1; }
+.is-ready .brand--mercado.is-in .brand-tile { animation: brand-pulse .7s .85s ease-out 1; }
 @keyframes brand-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(63, 196, 245, 0); }
-  35% { box-shadow: 0 0 0 4px rgba(63, 196, 245, .28); }
-  100% { box-shadow: 0 0 0 0 rgba(63, 196, 245, 0); }
+  0% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 0 rgba(0, 190, 200, 0); }
+  35% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 4px rgba(0, 190, 200, .3); }
+  100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 0 rgba(0, 190, 200, 0); }
 }
 
 /* Cuyana: entra lateralmente y recibe un destello de luz, una sola vez */
-.brand--cuyana .brand-tile img { opacity: 0; transform: translateX(-12px); }
-.brand--cuyana.is-visible .brand-tile img { animation: brand-slide .7s cubic-bezier(.16,1,.3,1) forwards; }
+.is-ready .brand--cuyana .brand-tile img { opacity: 0; transform: translateX(-12px); }
+.is-ready .brand--cuyana.is-in .brand-tile img { animation: brand-slide .7s cubic-bezier(.16,1,.3,1) forwards; }
 @keyframes brand-slide { to { opacity: 1; transform: none; } }
 .brand-sweep {
-  position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .22) 50%, transparent 62%);
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, .26) 50%, transparent 62%);
   transform: translateX(-100%);
 }
-.brand--cuyana.is-visible .brand-sweep { animation: brand-sweep-run 1.25s .5s ease-out forwards; }
+.is-ready .brand--cuyana.is-in .brand-sweep { animation: brand-sweep-run 1.25s .5s ease-out forwards; }
 @keyframes brand-sweep-run {
   0% { opacity: 0; transform: translateX(-100%); }
   15% { opacity: 1; }
@@ -325,18 +353,19 @@ body::after {
 }
 
 /* Zaldívar: una línea recorre el tile y va descubriendo el logotipo completo */
-.brand--zaldivar .brand-tile img { opacity: 0; transform: translateX(-10px); clip-path: inset(0 100% 0 0); }
-.brand--zaldivar.is-visible .brand-tile img { animation: brand-build .85s .15s cubic-bezier(.16,1,.3,1) forwards; }
+.is-ready .brand--zaldivar .brand-tile img { opacity: 0; transform: translateX(-10px); clip-path: inset(0 100% 0 0); }
+.is-ready .brand--zaldivar.is-in .brand-tile img { animation: brand-build .85s .15s cubic-bezier(.16,1,.3,1) forwards; }
 @keyframes brand-build {
   0% { opacity: 0; transform: translateX(-10px); clip-path: inset(0 100% 0 0); }
   100% { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
 }
-.brand-line { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.brand-line { position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none; }
 .brand-line::before {
-  content: ""; position: absolute; top: 8%; bottom: 8%; left: 0; width: 2px;
-  background: linear-gradient(180deg, transparent, #12305C 35%, #12305C 65%, transparent);
+  content: ""; position: absolute; top: 12%; bottom: 12%; left: 0; width: 2px;
+  background: linear-gradient(180deg, transparent, #00C896 30%, #00C896 70%, transparent);
+  box-shadow: 0 0 12px rgba(0, 200, 150, .6);
 }
-.brand--zaldivar.is-visible .brand-line { animation: brand-line-run 1s .15s cubic-bezier(.16,1,.3,1) forwards; }
+.is-ready .brand--zaldivar.is-in .brand-line { animation: brand-line-run 1s .15s cubic-bezier(.16,1,.3,1) forwards; }
 @keyframes brand-line-run {
   0% { opacity: 0; transform: translateX(0); }
   12% { opacity: .9; }
@@ -349,15 +378,26 @@ body::after {
   .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .brand-tile { height: 112px; }
 }
-/* Showcase: el proyecto enfocado gana presencia, los otros bajan sin desaparecer. */
-@media (hover: hover) and (min-width: 620px) {
-  .portfolio-grid:hover .brand-card,
-  .portfolio-grid:focus-within .brand-card { opacity: .65; }
-  .portfolio-grid:hover .brand-card:hover,
-  .portfolio-grid:focus-within .brand-card:focus-within {
-    opacity: 1; transform: translateY(-4px);
-    border-color: rgba(63, 196, 245, .4); box-shadow: 0 14px 30px rgba(0, 0, 0, .32);
+/* En desktop las cuatro caben en una fila, así que el scroll las enfocaría todas a la
+   vez: ahí manda el puntero y en reposo se ven las cuatro al 100 %. */
+@media (hover: hover) and (min-width: 1000px) {
+  .portfolio-grid.is-ready.has-focus .brand-card,
+  .portfolio-grid.is-ready .brand-card.is-focus {
+    opacity: 1; transform: none; border-color: var(--border); box-shadow: none;
   }
+  .brand-card.is-focus .brand-glow { opacity: 0; }
+  .brand-card.is-focus .brand-tile img { scale: 1; }
+
+  .portfolio-grid.is-ready:hover .brand-card,
+  .portfolio-grid.is-ready:focus-within .brand-card { opacity: .62; }
+  .portfolio-grid.is-ready:hover .brand-card:hover,
+  .portfolio-grid.is-ready:focus-within .brand-card:focus-within {
+    opacity: 1; transform: translateY(-4px);
+    border-color: rgba(var(--accent), .45);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .38), 0 0 0 1px rgba(var(--accent), .12);
+  }
+  .brand-card:hover .brand-glow,
+  .brand-card:focus-within .brand-glow { opacity: 1; }
   .brand-card:hover .brand-tile img,
   .brand-card:focus-within .brand-tile img { scale: 1.02; }
 }
