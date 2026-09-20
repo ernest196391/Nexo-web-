@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Tarjeta NEXO</title>
+<style>
+/* ===== Geometria de imprenta =====
+   Corte 85x55 mm. Sangrado de 3 mm por lado -> pagina de 91x61 mm.
+   Margen de seguridad: 4 mm desde el corte = 7 mm desde el borde de pagina.
+   Ningun texto ni el QR entran en esa franja. */
+:root{
+  --seguro: 7mm;
+  --tinta: #05070D;
+  --papel: #FFFFFF;
+  --marino: #0A1F3D;
+  --gris: #66788F;
+  --grad: linear-gradient(115deg, #7FE0FF 0%, #3DC6F4 52%, #1284D8 100%);
+  --grad-papel: linear-gradient(115deg, #2FA6E0 0%, #1580CE 52%, #0A5391 100%);
+}
+@page { size: 91mm 61mm; margin: 0; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#7a8296}
+body{font-family:'Liberation Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;font-kerning:normal}
+
+.cara{position:relative;width:91mm;height:61mm;overflow:hidden;
+  page-break-after:always;break-after:page}
+.cara:last-child{page-break-after:auto;break-after:auto}
+
+/* ---------- Frente ---------- */
+.frente{background:var(--tinta);color:#F2F5FB;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.frente-in{position:relative;z-index:1;text-align:center;padding:0 var(--seguro)}
+.frente .logo{height:15mm;width:auto;margin:0 auto}
+.filete{width:24mm;height:.5mm;margin:6.5mm auto 5mm;background:var(--grad);border-radius:1mm}
+.lema{font-size:7.6pt;line-height:1.45;color:#C6D1E4;max-width:64mm;margin:0 auto}
+
+/* ---------- Dorso ---------- */
+.dorso{background:var(--papel);color:var(--marino);
+  display:flex;align-items:stretch;gap:5.5mm;padding:var(--seguro)}
+.datos{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.marca{height:6.2mm;width:auto;margin-bottom:3.1mm}
+.nombre{font-size:11pt;font-weight:700;line-height:1.08;letter-spacing:-.012em}
+.cargo{font-size:7pt;color:var(--gris);margin-top:1mm;letter-spacing:.03em}
+.regla{width:13mm;height:.45mm;min-height:.45mm;background:var(--grad-papel);
+  border-radius:1mm;margin:2.6mm 0}
+.hace{list-style:none;font-size:6.8pt;line-height:1.56;color:#34475F}
+.hace li{padding-left:3mm;position:relative;white-space:nowrap}
+.hace li::before{content:"";position:absolute;left:0;top:1.5mm;width:1.25mm;height:1.25mm;
+  border-radius:50%;background:#1580CE}
+.contacto{margin-top:auto;padding-top:3mm;display:flex;align-items:center;gap:1.7mm}
+.contacto svg{width:3.5mm;height:3.5mm;flex:0 0 auto}
+.tel{font-size:8.6pt;font-weight:700;letter-spacing:-.005em;white-space:nowrap}
+
+.codigo{flex:0 0 auto;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.qr-caja{position:relative;width:24mm;height:24mm}
+.qr-caja>img:first-child{width:100%;height:100%;display:block}
+/* El hueco central ya esta vacio dentro del propio QR; la marca solo se apoya. */
+.qr-marca{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:3.4mm;height:auto}
+.pie-qr{font-size:6.2pt;line-height:1.4;color:var(--gris);text-align:center;margin-top:2.2mm}
+.pie-qr b{color:var(--marino);font-weight:700}
+</style></head>
+<body>
+
+<section class="cara frente">
+  <div class="frente-in">
+    <img class="logo" src="logo-claro.svg" alt="NEXO">
+    <div class="filete"></div>
+    <p class="lema">Sistemas que venden, atienden y operan solos.</p>
+  </div>
+</section>
+
+<section class="cara dorso">
+  <div class="datos">
+    <img class="marca" src="logo-papel.svg" alt="NEXO">
+    <p class="nombre">Ernesto Rondón</p>
+    <p class="cargo">Fundador</p>
+    <div class="regla"></div>
+    <ul class="hace">
+      <li>Tiendas online y webs que venden</li>
+      <li>Ventas y atención por WhatsApp</li>
+      <li>Agentes con inteligencia artificial</li>
+      <li>Aplicaciones y sistemas a medida</li>
+    </ul>
+    <div class="contacto">
+      <svg viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.06c-.24.68-1.42 1.31-1.95 1.36-.5.05-.96.23-3.23-.68-2.72-1.07-4.44-3.86-4.58-4.04-.13-.18-1.09-1.45-1.09-2.77s.69-1.97.94-2.24c.24-.27.53-.34.71-.34l.5.01c.16.01.38-.06.59.45.21.51.73 1.77.79 1.9.07.13.11.28.02.46-.09.18-.13.29-.27.45-.13.15-.28.34-.4.46-.13.13-.27.28-.12.54.15.27.67 1.1 1.43 1.79.98.87 1.8 1.14 2.07 1.27.27.13.42.11.58-.07.16-.18.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.51.71 1.77.84.26.13.43.2.5.31.06.11.06.64-.18 1.32z"/></svg>
+      <span class="tel">+53 5 405 6173</span>
+    </div>
+  </div>
+
+  <div class="codigo">
+    <div class="qr-caja">
+      <img src="qr.svg" alt="">
+      <img class="qr-marca" src="marca-papel.svg" alt="">
+    </div>
+    <p class="pie-qr"><b>Escanea</b> y mira<br>lo que hacemos</p>
+  </div>
+</section>
+
+</body></html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="NEXO">
+  <defs>
+    <linearGradient id="nexoIconGrad" x1="12%" y1="0%" x2="88%" y2="100%">
+      <stop offset="0%" stop-color="#2FA6E0"/>
+      <stop offset="52%" stop-color="#1580CE"/>
+      <stop offset="100%" stop-color="#0A5391"/>
+    </linearGradient>
+  </defs>
+  <path d="M28 97 L28 23 L92 97 L92 23"
+        fill="none" stroke="url(#nexoIconGrad)" stroke-width="17"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
