@@ -1,0 +1,24 @@
+{
+  "name": "nexo-whatsapp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Bot de WhatsApp de NEXO: responde, toma el pedido y avisa cuando hace falta una persona.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "vincular": "node src/index.js",
+    "desvincular": "rm -rf auth && echo 'Sesión borrada. La próxima vez habrá que escanear el QR otra vez.'",
+    "probar": "node src/guardia.prueba.mjs && node src/cerebro.prueba.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
+    "@hapi/boom": "^10.0.1",
+    "baileys": "6.7.24",
+    "dotenv": "^17.0.0",
+    "pino": "^9.5.0",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
