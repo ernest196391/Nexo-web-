@@ -99,7 +99,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .hiw-rail-fill { transition: none !important; }
   /* Los logos se ven completos y quietos: sin barridos, sin recortes, sin desenfoque,
      y las cuatro tarjetas al 100 % (sin foco que cambie con el scroll). */
-  .brand-card .brand-body,
   .brand-card .brand-tile,
   .brand-card .brand-tile img {
     animation: none !important; opacity: 1 !important;
@@ -252,11 +251,10 @@ body::after {
 
 /* ===== Resultados / Portfolio ===== */
 .portfolio { background: var(--bg-surface); }
-.portfolio-lead { margin-top: 4px; color: var(--text-secondary); max-width: 60ch; }
 .portfolio-grid { margin-top: 28px; display: grid; gap: 16px; grid-template-columns: 1fr; }
 .brand-card {
   position: relative; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px;
+  border-radius: var(--radius); overflow: hidden;
   transition: opacity .45s ease, transform .45s cubic-bezier(.16,1,.3,1),
               border-color .45s ease, box-shadow .45s ease;
 }
@@ -266,10 +264,10 @@ body::after {
 .brand--cuyana   { --accent: 216, 144, 48; }
 .brand--zaldivar { --accent: 0, 200, 150; }
 
+/* Sin texto debajo, el tile es la tarjeta entera: un muro de logos, sin doble marco. */
 .brand-tile {
   position: relative; display: flex; align-items: center; justify-content: center;
-  height: 104px; padding: 18px 20px; overflow: hidden;
-  border-radius: var(--radius-sm);
+  height: 120px; padding: 26px 28px; overflow: hidden;
   background: linear-gradient(158deg, #1B2440 0%, #0E1526 100%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
 }
@@ -286,9 +284,6 @@ body::after {
   position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease;
   background: radial-gradient(120% 90% at 50% 115%, rgba(var(--accent), .22), transparent 70%);
 }
-.brand-body { margin-top: 14px; }
-.brand-name { margin: 0; font-size: .95rem; font-weight: 700; color: var(--text-primary); }
-.brand-desc { margin: 6px 0 0; font-size: .86rem; line-height: 1.5; color: var(--text-secondary); }
 
 /* -- Tarjeta con el foco: gana presencia; las demás ceden sin desaparecer -- */
 .portfolio-grid.is-ready.has-focus .brand-card { opacity: .62; }
@@ -299,13 +294,6 @@ body::after {
 }
 .brand-card.is-focus .brand-glow { opacity: 1; }
 .brand-card.is-focus .brand-tile img { scale: 1.02; }
-
-/* -- Entrada, una sola vez -- */
-.is-ready .brand-card .brand-body { opacity: 0; transform: translateY(10px); }
-.is-ready .brand-card.is-in .brand-body {
-  animation: brand-body-in .6s .3s cubic-bezier(.16,1,.3,1) forwards;
-}
-@keyframes brand-body-in { to { opacity: 1; transform: none; } }
 
 /* Casa Viva: aparece enfocándose, con un acento cálido que recorre el borde una vez */
 .is-ready .brand--casaviva .brand-tile img { opacity: 0; transform: scale(.94); filter: blur(6px); }
@@ -340,9 +328,9 @@ body::after {
 @keyframes brand-wipe { to { clip-path: inset(0 0 0 0); } }
 .is-ready .brand--mercado.is-in .brand-tile { animation: brand-pulse .7s .85s ease-out 1; }
 @keyframes brand-pulse {
-  0% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 0 rgba(0, 190, 200, 0); }
-  35% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 4px rgba(0, 190, 200, .3); }
-  100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 0 rgba(0, 190, 200, 0); }
+  0% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 0 rgba(0, 190, 200, 0); }
+  35% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 3px rgba(0, 190, 200, .45); }
+  100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 0 rgba(0, 190, 200, 0); }
 }
 
 /* Cuyana: entra lateralmente y recibe un destello de luz, una sola vez */
@@ -386,6 +374,7 @@ body::after {
 @media (min-width: 620px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1000px) {
   .portfolio-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .brand-tile { height: 140px; }
   .brand-tile { height: 112px; }
 }
 /* En desktop las cuatro caben en una fila, así que el scroll las enfocaría todas a la
@@ -899,7 +888,6 @@ body::after {
 .lab-body { padding: 18px 20px; }
 .lab-item h3 { color: var(--text-primary); font-size: 1.05rem; margin: 0 0 6px; }
 .lab-item p { color: var(--text-secondary); font-size: .92rem; margin: 0; }
-.lab-nota { margin-top: 24px; color: var(--text-secondary); font-size: .88rem; font-style: italic; }
 
 /* Hover solo con puntero fino, y contenido: 4 px y 1.5 % de zoom como máximo */
 @media (hover: hover) and (pointer: fine) {
