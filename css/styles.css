@@ -66,9 +66,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .area--bg:hover .area-media { transform: none !important; }
   .escenario-paso { animation: none !important; }
   .escenario-link::after { animation: none !important; opacity: 0 !important; }
-  .lab-item { transition-delay: 0s !important; }
-  .lab-media { transition: none !important; }
-  .lab-item:hover .lab-media { transform: none !important; }
+  /* NEXO Lab: imágenes visibles y quietas, sin trayectorias, bucles ni máscaras. */
+  .lab-grid.is-ready .lab-visual img,
+  .lab-grid.is-ready .lab-item h3,
+  .lab-grid.is-ready .lab-item p {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  .lab-item, .lab-visual img { transition: none !important; }
+  .lab-item:hover { transform: none !important; }
+  .lab-item:hover .lab-visual img { scale: 1 !important; }
+  .lab-hit, .lab-core, .lab-rise, .lab-tap, .lab-beam,
+  .lab-route-line, .lab-route-dot {
+    animation: none !important; opacity: 0 !important;
+  }
   .faq-item summary::after { transition: none !important; }
   .btn-arrow::after { transition: none !important; }
   .btn-arrow:hover::after { transform: none !important; }
@@ -741,39 +751,165 @@ body::after {
   22% { opacity: 0; transform: translateX(34px); }
 }
 
-/* ===== NEXO Lab ===== */
+/* ===== NEXO Lab =====
+   Las seis comparten el mismo lenguaje: ciclo de 10 s, misma curva, misma
+   intensidad de glow y el mismo tipo de capas. Lo que cambia es qué cuenta
+   cada una, no cómo se mueve. */
 .nexo-lab { background: var(--bg-surface); }
-.lab-grid { display: grid; gap: 16px; margin-top: 28px; }
+.lab-grid { display: grid; gap: 18px; margin-top: 28px; }
 @media (min-width: 620px) { .lab-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px) { .lab-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .lab-grid { grid-template-columns: repeat(3, 1fr); } }
+
 .lab-item {
-  background: var(--bg-card); border: 1px solid var(--border);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ciclo: 10s;
+  position: relative; background: var(--bg-card); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden;
-  transition: opacity .5s ease, transform .5s ease, border-color .3s ease, box-shadow .3s ease;
+  transition: transform .45s var(--ease), border-color .35s ease, box-shadow .35s ease;
 }
-.lab-item:nth-child(2) { transition-delay: 80ms; }
-.lab-item:nth-child(3) { transition-delay: 160ms; }
-.lab-item:nth-child(4) { transition-delay: 240ms; }
-.lab-item:nth-child(5) { transition-delay: 320ms; }
-.lab-item:nth-child(6) { transition-delay: 400ms; }
-.lab-item:hover { transition-delay: 0s; border-color: rgba(63,196,245,.45); box-shadow: 0 16px 32px rgba(0,0,0,.35); }
 
-.lab-media { height: 140px; background-size: cover; background-position: center; transition: transform .6s ease; }
-.lab-item:hover .lab-media { transform: scale(1.06); }
+/* -- Visual: 16/9 exacto, que es la proporción nativa de las seis -- */
+.lab-visual {
+  position: relative; margin: 0; aspect-ratio: 16 / 9;
+  overflow: hidden; background: var(--bg-page);
+}
+.lab-visual img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: scale .5s var(--ease);
+}
+.lab-fx, .lab-route { position: absolute; inset: 0; pointer-events: none; }
 
-#lab-product-studio .lab-media { background: linear-gradient(135deg, rgba(255,139,92,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-product-studio.webp") center/cover; }
-#lab-veci .lab-media { background: linear-gradient(135deg, rgba(63,196,245,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-veci.webp") center/cover; }
-#lab-cuadre .lab-media { background: linear-gradient(135deg, rgba(215,242,78,.22), rgba(20,28,48,.9)), url("../assets/lab/lab-cuadre.webp") center/cover; }
-#lab-gestores .lab-media { background: linear-gradient(135deg, rgba(63,196,245,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-gestores.webp") center/cover; }
-#lab-mensajeria .lab-media { background: linear-gradient(135deg, rgba(255,139,92,.28), rgba(20,28,48,.9)), url("../assets/lab/lab-mensajeria.webp") center/cover; }
-#lab-commerce .lab-media { background: linear-gradient(135deg, rgba(215,242,78,.22), rgba(20,28,48,.9)), url("../assets/lab/lab-commerce.webp") center/cover; }
+/* -- Entrada, una sola vez por tarjeta -- */
+.lab-grid.is-ready .lab-visual img { opacity: 0; transform: translateY(24px) scale(.985); }
+.lab-grid.is-ready .lab-item.is-in .lab-visual img { animation: lab-in .75s var(--ease) forwards; }
+@keyframes lab-in { to { opacity: 1; transform: none; } }
+
+.lab-grid.is-ready .lab-item h3,
+.lab-grid.is-ready .lab-item p { opacity: 0; transform: translateY(12px); }
+.lab-grid.is-ready .lab-item.is-in h3 { animation: lab-in .7s .12s var(--ease) forwards; }
+.lab-grid.is-ready .lab-item.is-in p { animation: lab-in .7s .2s var(--ease) forwards; }
+
+/* -- Capas de secuencia: solo corren mientras la tarjeta está a la vista -- */
+.lab-hit, .lab-core, .lab-rise, .lab-tap, .lab-beam { opacity: 0; }
+
+.lab-hit {
+  position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
+  border-radius: 10px;
+  box-shadow: 0 0 0 1.5px rgba(63, 196, 245, .75), inset 0 0 26px rgba(63, 196, 245, .22);
+}
+.lab-hit--amber { box-shadow: 0 0 0 1.5px rgba(255, 178, 97, .8), inset 0 0 26px rgba(255, 139, 92, .22); }
+.lab-hit--ok { box-shadow: 0 0 0 1.5px rgba(45, 210, 126, .85), inset 0 0 26px rgba(45, 210, 126, .2); }
+.lab-hit--round { border-radius: 999px; }
+.lab-item.is-live .lab-hit { animation: lab-hit var(--ciclo) var(--d) ease-in-out infinite; }
+@keyframes lab-hit {
+  0%, 100% { opacity: 0; }
+  2% { opacity: 1; }
+  7% { opacity: .85; }
+  13% { opacity: 0; }
+}
+
+/* Núcleo: respira muy poco (máx. 2 %) y da un pulso cuando le toca el turno */
+.lab-core {
+  position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
+  border-radius: 999px;
+  box-shadow: 0 0 0 1.5px rgba(63, 196, 245, .7), 0 0 34px rgba(63, 196, 245, .3);
+}
+.lab-item.is-live .lab-core { animation: lab-core var(--ciclo) var(--d) ease-in-out infinite; }
+@keyframes lab-core {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  2% { opacity: 1; transform: scale(1.02); }
+  9% { opacity: .8; transform: scale(1); }
+  16% { opacity: 0; transform: scale(1); }
+}
+
+/* Gráfico que se revela de abajo hacia arriba */
+.lab-rise {
+  position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
+  border-radius: 8px; transform-origin: bottom;
+  background: linear-gradient(0deg, rgba(63, 196, 245, .2), transparent 75%);
+  box-shadow: inset 0 -1.5px 0 rgba(63, 196, 245, .6);
+}
+.lab-item.is-live .lab-rise { animation: lab-rise var(--ciclo) var(--d) ease-out infinite; }
+@keyframes lab-rise {
+  0%, 100% { opacity: 0; transform: scaleY(.2); }
+  3% { opacity: 1; }
+  10% { opacity: 1; transform: scaleY(1); }
+  18% { opacity: 0; transform: scaleY(1); }
+}
+
+/* Pulso corto sobre un botón, una sola vez por ciclo */
+.lab-tap {
+  position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
+  border-radius: 8px; box-shadow: 0 0 0 1.5px rgba(63, 196, 245, .8);
+}
+.lab-item.is-live .lab-tap { animation: lab-tap var(--ciclo) var(--d) ease-in-out infinite; }
+@keyframes lab-tap {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  2% { opacity: 1; transform: scale(1); }
+  5% { transform: scale(1.03); }
+  8% { transform: scale(1); }
+  12% { opacity: 0; }
+}
+
+/* Punto que recorre la escena; el translate % va contra el tamaño del marco */
+.lab-beam { position: absolute; inset: 0; }
+.lab-beam::before {
+  content: ""; position: absolute; left: -.7%; top: -1.25%;
+  width: 1.4%; aspect-ratio: 1; border-radius: 50%;
+  background: #3FC4F5; box-shadow: 0 0 16px 5px rgba(63, 196, 245, .55);
+}
+.lab-beam--amber::before { background: #FFB661; box-shadow: 0 0 16px 5px rgba(255, 139, 92, .5); }
+.lab-item.is-live .lab-beam { animation: lab-beam var(--ciclo) var(--d) cubic-bezier(.22, 1, .36, 1) infinite; }
+@keyframes lab-beam {
+  0% { transform: translate(var(--bx1), var(--by)); opacity: 0; }
+  3% { opacity: 1; }
+  36% { transform: translate(var(--bx2), var(--by)); opacity: 1; }
+  43% { transform: translate(var(--bx2), var(--by)); opacity: 0; }
+  100% { transform: translate(var(--bx1), var(--by)); opacity: 0; }
+}
+
+/* Ruta de mensajería: se dibuja sola y un punto la recorre */
+.lab-route-line {
+  fill: none; stroke: #3FC4F5; stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 200; stroke-dashoffset: 200; opacity: 0;
+}
+.lab-item.is-live .lab-route-line { animation: lab-route var(--ciclo) 3s ease-out infinite; }
+@keyframes lab-route {
+  0%, 100% { stroke-dashoffset: 200; opacity: 0; }
+  3% { opacity: .9; }
+  19% { stroke-dashoffset: 0; opacity: .9; }
+  26% { stroke-dashoffset: 0; opacity: 0; }
+}
+/* El punto recorre la misma curva vía offset-path, así queda bajo control de CSS
+   (se detiene fuera de pantalla y con reduced-motion) en vez de animación SMIL. */
+.lab-route-dot {
+  fill: #3FC4F5; opacity: 0;
+  offset-path: path("M823 398 C 858 432, 884 378, 913 398 C 944 420, 962 452, 999 436");
+  offset-rotate: 0deg; offset-distance: 0%;
+}
+.lab-item.is-live .lab-route-dot { animation: lab-dot var(--ciclo) 3.1s ease-in-out infinite; }
+@keyframes lab-dot {
+  0% { opacity: 0; offset-distance: 0%; }
+  4% { opacity: 1; offset-distance: 0%; }
+  19% { opacity: 1; offset-distance: 100%; }
+  24% { opacity: 0; offset-distance: 100%; }
+  100% { opacity: 0; offset-distance: 100%; }
+}
 
 .lab-body { padding: 18px 20px; }
 .lab-item h3 { color: var(--text-primary); font-size: 1.05rem; margin: 0 0 6px; }
 .lab-item p { color: var(--text-secondary); font-size: .92rem; margin: 0; }
 .lab-nota { margin-top: 24px; color: var(--text-secondary); font-size: .88rem; font-style: italic; }
 
-@media (min-width: 700px) { .lab-media { height: 168px; } }
+/* Hover solo con puntero fino, y contenido: 4 px y 1.5 % de zoom como máximo */
+@media (hover: hover) and (pointer: fine) {
+  .lab-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(63, 196, 245, .45);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .35);
+  }
+  .lab-item:hover .lab-visual img { scale: 1.015; }
+}
 
 /* ===== Planes ===== */
 .planes { background: var(--bg-surface); }
