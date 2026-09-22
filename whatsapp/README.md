@@ -1,27 +1,61 @@
-# Bot de WhatsApp de NEXO
+# WhatsApp de varios negocios, que aprende de ti
 
-Responde a quien escribe, contesta lo que ya sabemos del negocio y te avisa
-cuando hace falta una persona. Corre en tu computadora, no en un servidor.
+Un solo programa atiende el WhatsApp de todos tus negocios. Cada negocio tiene
+su número, sus datos y su forma de hablar. Y cuando el bot no sabe algo, se
+calla, respondes tú desde el teléfono, y **se lo queda aprendido**.
 
 ---
 
-## Lee esto antes de arrancar
+## Lo que tienes que saber antes de nada
 
-La API oficial de WhatsApp (Cloud API de Meta) **no está disponible para Cuba**:
-ni los negocios cubanos pueden usarla, ni los usuarios de WhatsApp en Cuba
-pueden recibir mensajes enviados por ella. Así que esto usa la vía no oficial
-— Baileys, que habla el mismo protocolo que WhatsApp Web enlazando un número
-real por QR.
+**Ni Meta ni OpenAI dan servicio a Cuba.**
 
-Funciona, pero **va contra los términos de Meta y el número puede ser
-bloqueado**. La detección es automática, a nivel de protocolo.
+- La API oficial de WhatsApp (Cloud API) no está disponible para negocios en
+  Cuba, y los usuarios de WhatsApp en Cuba tampoco pueden recibir mensajes
+  enviados por ella. Por eso esto va por Baileys, enlazando un número real por
+  QR. Funciona, pero va contra los términos de Meta y el número puede ser
+  bloqueado.
+- La API de OpenAI tampoco da servicio a Cuba, y usarla desde una IP cubana
+  **puede hacer que te suspendan la cuenta**. Lo mismo vale para Anthropic.
 
-Lo que más dispara un bloqueo es **escribir a gente que no te escribió
-primero**. Por eso este bot no puede hacerlo: no existe ninguna función de
-envío masivo en el código, ni siquiera desactivada. Solo contesta.
+Por eso este bot **no depende de ninguna IA para funcionar**. La IA es un
+añadido opcional. Lo que de verdad lo hace inteligente es lo que aprende de ti,
+y eso corre entero en tu computadora, sin internet y sin cuenta en ningún sitio.
 
-**Lo ideal es usar un número aparte, no el que tienes en la web y en las
-tarjetas.** Si aun así usas el principal, deja `LISTA_BLANCA` puesta.
+Si consigues acceso legítimo a una API (una entidad fuera de Cuba, un socio, o
+un modelo corriendo en tu propia máquina), se conecta cambiando dos líneas del
+`.env`. Pero el sistema está pensado para que no haga falta.
+
+---
+
+## Cómo aprende
+
+```
+  Cliente: "¿cuánto cuesta llevar un paquete a Playa?"
+     ↓
+  El bot no sabe → se calla y te avisa a tu propio WhatsApp
+     ↓
+  Tú respondes desde el teléfono: "A Playa son 500 CUP, llega el mismo día"
+     ↓
+  El bot ve tu respuesta, la empareja con la pregunta y se la guarda
+     ↓
+  Otro cliente: "cuanto vale mandar algo para playa?"
+     ↓
+  El bot responde solo, con TUS palabras
+```
+
+Cada vez que atiendes a alguien, el bot mejora. No hace falta entrenarlo ni
+escribir reglas: haz tu trabajo y él va copiando.
+
+**Cuando te corriges, manda tu última versión.** Si mañana el precio sube y
+respondes "ahora son 600", sustituye a la respuesta vieja en vez de convivir
+con ella.
+
+**No responde si no está seguro.** Reconoce "cuánto vale mandar algo para
+Playa" como la misma pregunta que "cuánto cuesta llevar un paquete a Playa",
+pero **no** contesta el precio de Playa a quien preguntó por Santiago. Prefiere
+callarse antes que inventar. Ese umbral está medido, no puesto a ojo: corre
+`npm run probar` y lo ves.
 
 ---
 
@@ -29,86 +63,133 @@ tarjetas.** Si aun así usas el principal, deja `LISTA_BLANCA` puesta.
 
 ```bash
 npm install
-cp .env.example .env     # ábrelo y revísalo, sobre todo LISTA_BLANCA
+cp .env.example .env         # revisa LISTA_BLANCA
+```
+
+Da de alta tu primer negocio:
+
+```bash
+npm run gestionar añadir "NEXO" 5354056173 \
+  "Automatización, IA y software para negocios" \
+  "Directo y cálido, de tú" \
+  "https://nexo-plan-veci.vercel.app"
+```
+
+Ponle lo que tiene que saber:
+
+```bash
+npm run gestionar dato NEXO "plan Starter" "\$250 de instalación, \$125/mes + 10%"
+npm run gestionar dato NEXO "horario" "Lunes a sábado, 9am a 6pm"
+```
+
+Arranca:
+
+```bash
 npm start
 ```
 
-Sale un QR en la terminal. En el teléfono del número que vas a usar:
+Sale un QR por cada negocio. Escanea cada uno **desde el teléfono de ese
+número**: Ajustes → Dispositivos vinculados → Vincular dispositivo.
 
-**WhatsApp → Ajustes → Dispositivos vinculados → Vincular dispositivo → escanear**
-
-Ya está. La sesión queda guardada en `auth/`, así que la próxima vez arranca
-solo. Para desvincular: `npm run desvincular`.
-
-### La prueba
-
-Escríbele desde **otro** teléfono (uno que esté en `LISTA_BLANCA`). Prueba con:
-
-- "hola"
-- "¿cuánto cuesta?"
-- "quiero hablar con alguien" → te llega el aviso a tu propio chat y el bot se calla
-
-En la terminal ves entrar y salir cada mensaje. Todo queda en `registro/`,
-un archivo por día: eso es lo que le enseñas a un cliente.
+Para añadir otro negocio: otro `añadir`, reinicias, y escaneas su QR. No se
+toca ni una línea de código.
 
 ---
 
-## Órdenes desde tu teléfono
+## El día a día
 
-Escríbelas tú, en cualquier chat. El bot las lee y las obedece:
+```bash
+npm run negocios                      # qué hay dado de alta y cuánto sabe cada uno
+npm run gestionar revisar NEXO        # lo que te ha aprendido y está sin revisar
+npm run gestionar aprobar 14          # "esta está bien" → la usa con más confianza
+npm run gestionar descartar 15        # "esta no" → no la vuelve a usar
+npm run gestionar sabidos NEXO        # lo aprobado, lo más usado primero
+npm run gestionar                     # todas las órdenes
+```
+
+Revisar no es obligatorio: sin revisar también las usa, pero solo cuando la
+pregunta es casi idéntica. Aprobarlas le da más margen.
+
+### Desde tu teléfono
+
+En cualquier chat, escribe tú:
 
 | Orden | Qué hace |
 |---|---|
-| `/pausa` | Deja de responder a todo el mundo |
-| `/sigue` | Vuelve a responder |
-| `/mudo` | Se calla en ese chat concreto y hablas tú |
-| `/estado` | Cuántos mensajes lleva esta hora, contactos, si la IA está activa |
+| `/pausa` | Todos los bots dejan de responder |
+| `/sigue` | Vuelven |
+| `/mudo` | Se calla en ese chat concreto |
+| `/estado` | Negocios conectados, mensajes esta hora, si hay IA |
+
+Y no hace falta ninguna orden para tomar el control: **en cuanto escribes en un
+chat, el bot se aparta 30 minutos**.
 
 ---
 
 ## Lo que frena el riesgo de bloqueo
 
-Todo esto está en `src/guardia.js` y se puede ajustar desde `.env`:
+- **Nunca inicia una conversación.** Solo responde a quien escribió primero. No
+  existe función de envío masivo en el código, ni siquiera desactivada.
+- **Lista blanca**: mientras `LISTA_BLANCA` tenga números, ignora al resto.
+- **Espera de 2,5 a 6 segundos al azar**, con "escribiendo…".
+- **Topes por hora**, por contacto y en total.
+- **Se calla cuando entras tú** en un chat.
+- **No marca el número como "en línea"**, así usas el teléfono con normalidad.
 
-- **Solo responde a quien escribió primero.** Nunca inicia una conversación.
-- **Lista blanca.** Mientras `LISTA_BLANCA` tenga números, ignora a todos los
-  demás. Para una demo no necesitas más de dos o tres.
-- **Espera al azar** de 2,5 a 6 segundos antes de contestar, con "escribiendo…".
-  Responder en 80 ms no lo hace ninguna persona.
-- **Topes por hora**, por contacto y en total. Al llegar al tope, se calla.
-- **Al pasar a una persona se silencia** ese chat 30 minutos, para no hablar
-  encima de ti.
-- **No marca el número como "en línea"** (`markOnlineOnConnect: false`), así
-  sigues usando WhatsApp con normalidad en el teléfono.
-
-Aun con todo esto el riesgo no es cero. Es más bajo, no inexistente.
+El riesgo baja; no desaparece. Lo suyo es un número por negocio, y no el que
+tienes impreso en las tarjetas.
 
 ---
 
-## Con IA y sin IA
+## Conectar una IA (opcional)
 
-Sin `ANTHROPIC_API_KEY` el bot funciona igual: responde saludos, precios, qué
-hacemos y el enlace de la web con reglas fijas, y lo que no encaje te lo pasa a
-ti. Es suficiente para una demo.
+Habla el formato de OpenAI, así que vale OpenAI, OpenRouter, LM Studio,
+llama.cpp… cualquiera que exponga `/chat/completions`.
 
-Con clave, entiende lo que le escriban con sus palabras ("tengo una cafetería y
-no sé por dónde empezar") y contesta en el tono del negocio.
+```bash
+# en .env
+IA_BASE_URL=https://api.openai.com/v1
+IA_CLAVE=tu-clave
+```
 
-El modelo por defecto es `claude-opus-5`. Si quieres gastar menos, cambia
-`CLAUDE_MODELO` en `.env` a `claude-haiku-4-5`: para contestar preguntas
-frecuentes de WhatsApp va de sobra y cuesta bastante menos.
+Luego, para saber qué modelo poner:
+
+```bash
+npm run modelos     # pregunta a tu proveedor qué admite tu clave
+```
+
+y pones uno en `IA_MODELO`. No hay modelo por defecto a propósito: los nombres
+cambian cada pocos meses y es mejor preguntar que adivinar.
+
+Con IA conectada, el bot le pasa **tus respuestas parecidas como ejemplo**, así
+que no habla como un robot genérico: copia tu forma. Sin IA, sigue funcionando
+con lo aprendido.
 
 ---
 
-## Adaptarlo a un cliente
+## Qué hay dentro
 
-Casi todo está en dos sitios de `src/cerebro.js`:
+| Archivo | Para qué |
+|---|---|
+| `src/db.js` | La base de datos. Un archivo SQLite, sin servidor. Viene dentro de Node. |
+| `src/aprendizaje.js` | Captura tus respuestas y las vuelve a encontrar |
+| `src/sinonimos.js` | Que "mandar", "llevar" y "enviar" cuenten como lo mismo |
+| `src/umbrales.js` | Cuánto se tiene que parecer una pregunta. Con el porqué de cada número. |
+| `src/cerebro.js` | Decide: ¿lo sé por ti? ¿lo pregunto a la IA? ¿o te aviso? |
+| `src/guardia.js` | Todo lo que frena el riesgo de bloqueo |
+| `src/proveedor.js` | El puente con la IA, si la hay |
+| `src/gestionar.js` | Las órdenes de la terminal |
+| `src/index.js` | Las sesiones de WhatsApp, una por negocio |
 
-- La constante `NEGOCIO` — qué vende, precios, enlaces.
-- La lista `RESPUESTAS` — las preguntas frecuentes con su respuesta exacta.
+Todo en `datos/nexo.db`. Cópialo y tienes una copia de seguridad de todo lo que
+el bot sabe.
 
-Cambiando eso y el `.env` tienes el mismo bot para otro negocio, sin tocar el
-resto del código.
+### Afinar el diccionario
+
+`src/sinonimos.js` es lo que más rinde por minuto invertido. Si tus clientes
+dicen "bulto" y tú dices "paquete", añádelo al grupo. Después corre
+`npm run probar`: te avisa si un cambio hizo que empiece a confundir preguntas
+que en realidad son distintas.
 
 ---
 
@@ -118,17 +199,6 @@ resto del código.
 npm run probar
 ```
 
-Comprueba las reglas de seguridad (solo responder, lista blanca, topes,
-silencio, espera al azar) y las respuestas fijas. No toca WhatsApp ni gasta API.
-
----
-
-## Cuando algo falla
-
-| Qué ves | Qué pasa |
-|---|---|
-| El QR sale y se vuelve a dibujar | No te dio tiempo. Escanea más rápido; dura unos 20 s. |
-| `La sesión se cerró desde el teléfono` | Lo desvinculaste desde el móvil. `npm run desvincular && npm start`. |
-| `Conexión caída` y reconecta | Normal con internet inestable. Se recupera solo. |
-| Responde pero muy raro | Sin clave de API. Está usando solo las reglas fijas. |
-| No responde a nadie | Mira `LISTA_BLANCA` en `.env`, o manda `/estado` desde tu teléfono. |
+Cuatro tandas: las reglas de seguridad, el diccionario de sinónimos, la memoria
+de lo aprendido y el ciclo completo (llega un cliente → no sabe → respondes tú
+→ ya sabe). No toca WhatsApp ni gasta API.

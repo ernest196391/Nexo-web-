@@ -10,7 +10,6 @@ const HORA_MS = 60 * 60 * 1000;
 export function crearGuardia(config) {
   const porContacto = new Map();  // jid -> [marcas de tiempo]
   const global = [];              // marcas de tiempo de todo lo enviado
-  const silenciados = new Map();  // jid -> hasta cuándo callarse
   const conocidos = new Set();    // jid que nos han escrito en esta sesión
 
   const podar = (arr, desde) => {
@@ -22,10 +21,6 @@ export function crearGuardia(config) {
     // Se llama con cada mensaje entrante, antes de decidir nada.
     marcarEntrante(jid) {
       conocidos.add(jid);
-    },
-
-    silenciar(jid, minutos = config.silencioMin) {
-      silenciados.set(jid, Date.now() + minutos * 60 * 1000);
     },
 
     /**
@@ -42,13 +37,6 @@ export function crearGuardia(config) {
       if (config.listaBlanca.length && !config.listaBlanca.includes(numero)) {
         return { ok: false, motivo: 'fuera de la lista blanca' };
       }
-
-      const hasta = silenciados.get(jid);
-      if (hasta && ahora < hasta) {
-        const quedan = Math.ceil((hasta - ahora) / 60000);
-        return { ok: false, motivo: `en manos de una persona (${quedan} min)` };
-      }
-      if (hasta) silenciados.delete(jid);
 
       const mios = podar(porContacto.get(jid) || [], ahora - HORA_MS);
       if (mios.length >= config.topeContactoHora) {
@@ -83,7 +71,6 @@ export function crearGuardia(config) {
         enviadosUltimaHora: podar(global, desde).length,
         topeGlobalHora: config.topeGlobalHora,
         contactos: conocidos.size,
-        silenciados: [...silenciados.entries()].filter(([, h]) => h > Date.now()).length,
       };
     },
   };

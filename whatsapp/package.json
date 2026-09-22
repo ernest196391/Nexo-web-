@@ -3,18 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Bot de WhatsApp de NEXO: responde, toma el pedido y avisa cuando hace falta una persona.",
+  "description": "Un bot de WhatsApp para varios negocios, que aprende de cómo respondes tú.",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "vincular": "node src/index.js",
-    "desvincular": "rm -rf auth && echo 'Sesión borrada. La próxima vez habrá que escanear el QR otra vez.'",
-    "probar": "node src/guardia.prueba.mjs && node src/cerebro.prueba.mjs"
+    "start": "node --no-warnings src/index.js",
+    "negocios": "node --no-warnings src/gestionar.js listar",
+    "gestionar": "node --no-warnings src/gestionar.js",
+    "modelos": "node --no-warnings src/gestionar.js modelos",
+    "desvincular": "rm -rf auth && echo \"Sesiones borradas. Habrá que escanear el QR otra vez.\"",
+    "probar": "node --no-warnings src/guardia.prueba.mjs && node --no-warnings src/sinonimos.prueba.mjs && node --no-warnings src/aprendizaje.prueba.mjs && node --no-warnings src/cerebro.prueba.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.70.0",
     "@hapi/boom": "^10.0.1",
     "baileys": "6.7.24",
     "dotenv": "^17.0.0",

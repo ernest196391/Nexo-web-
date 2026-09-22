@@ -1,208 +1,204 @@
 import makeWASocket, {
-  useMultiFileAuthState,
-  makeCacheableSignalKeyStore,
-  fetchLatestBaileysVersion,
-  DisconnectReason,
-  Browsers,
-  isJidGroup,
-  isJidBroadcast,
-  jidNormalizedUser,
+  useMultiFileAuthState, makeCacheableSignalKeyStore, fetchLatestBaileysVersion,
+  DisconnectReason, Browsers, isJidGroup, isJidBroadcast, jidNormalizedUser,
 } from 'baileys';
 import { Boom } from '@hapi/boom';
 import qrcode from 'qrcode-terminal';
 import pino from 'pino';
 
-import { config, avisos } from './config.js';
+import { config } from './config.js';
+import { abrir, negocios, mensajes, contactos } from './db.js';
 import { crearGuardia } from './guardia.js';
 import { responder } from './cerebro.js';
-import { anotar } from './registro.js';
+import { capturar } from './aprendizaje.js';
+import { descripcion } from './proveedor.js';
 
-const log = pino({ level: process.env.LOG || 'warn' });
-const guardia = crearGuardia(config);
-const historial = new Map();   // jid -> últimos turnos, para que la IA tenga contexto
-const TURNOS = 8;
+const log = pino({ level: process.env.LOG || 'silent' });
+const db = abrir(process.env.BASE_DATOS || 'datos/nexo.db');
+const M = mensajes(db), C = contactos(db);
 
 let pausado = false;
-let yo = null;                 // jid propio: ahí se avisa cuando hace falta una persona
-
 const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
 const numeroDe = (jid) => (jid || '').split('@')[0].split(':')[0].replace(/\D/g, '');
 
 function textoDe(msg) {
   const m = msg.message;
   if (!m) return '';
-  return (
-    m.conversation ||
-    m.extendedTextMessage?.text ||
-    m.imageMessage?.caption ||
-    m.videoMessage?.caption ||
-    m.documentMessage?.caption ||
-    m.buttonsResponseMessage?.selectedDisplayText ||
-    m.listResponseMessage?.title ||
-    ''
-  ).trim();
+  return (m.conversation || m.extendedTextMessage?.text || m.imageMessage?.caption ||
+          m.videoMessage?.caption || m.documentMessage?.caption ||
+          m.buttonsResponseMessage?.selectedDisplayText || m.listResponseMessage?.title || '').trim();
 }
 
-// Órdenes que escribes tú desde tu propio teléfono, en cualquier chat.
-async function orden(sock, msg, texto) {
-  const jid = msg.key.remoteJid;
-  const di = (t) => sock.sendMessage(jid, { text: t });
+// ---------------------------------------------------------------- una sesión
 
-  switch (texto.toLowerCase().split(/\s+/)[0]) {
-    case '/pausa':
-      pausado = true;
-      await di('Bot en pausa. No responde a nadie hasta que escribas /sigue.');
-      return true;
-    case '/sigue':
-      pausado = false;
-      await di('Bot activo otra vez.');
-      return true;
-    case '/mudo':
-      guardia.silenciar(jid);
-      await di(`Me callo en este chat ${config.silencioMin} minutos. Habla tú.`);
-      return true;
-    case '/estado': {
-      const e = guardia.estado();
-      await di(
-        `${pausado ? 'EN PAUSA' : 'Activo'}\n` +
-        `Enviados la última hora: ${e.enviadosUltimaHora}/${e.topeGlobalHora}\n` +
-        `Contactos en esta sesión: ${e.contactos}\n` +
-        `Chats en manos de una persona: ${e.silenciados}\n` +
-        `IA: ${config.apiKey ? config.modelo : 'sin clave, solo reglas'}\n` +
-        `Lista blanca: ${config.listaBlanca.length ? config.listaBlanca.join(', ') : 'vacía (responde a todos)'}`
-      );
-      return true;
+function sesion(negocio) {
+  const guardia = crearGuardia(config);
+  const mios = new Set();          // ids de lo que mandó el bot, para no aprender de sí mismo
+  const etiqueta = `${negocio.nombre}`;
+  let sock = null, yo = null;
+
+  const di = (t) => console.log(`[${etiqueta}] ${t}`);
+
+  async function enviar(jid, texto) {
+    const r = await sock.sendMessage(jid, { text: texto });
+    if (r?.key?.id) {
+      mios.add(r.key.id);
+      if (mios.size > 500) mios.delete(mios.values().next().value);
     }
-    default:
-      return false;
-  }
-}
-
-async function atender(sock, msg) {
-  const jid = msg.key.remoteJid;
-  if (!jid || isJidGroup(jid) || isJidBroadcast(jid) || jid === 'status@broadcast') return;
-
-  const texto = textoDe(msg);
-
-  // Mensajes tuyos: solo miramos si son una orden. Nunca los contestamos.
-  if (msg.key.fromMe) {
-    if (texto.startsWith('/')) await orden(sock, msg, texto);
-    return;
-  }
-  if (!texto) return;
-
-  const numero = numeroDe(jid);
-  guardia.marcarEntrante(jid);
-
-  if (pausado) {
-    await anotar({ tipo: 'ignorado', numero, texto, motivo: 'bot en pausa' });
-    return;
+    guardia.anotaEnvio(jid);
+    return r;
   }
 
-  const permiso = guardia.permite(jid, numero);
-  if (!permiso.ok) {
-    await anotar({ tipo: 'ignorado', numero, texto, motivo: permiso.motivo });
-    console.log(`· ${numero}: ignorado (${permiso.motivo})`);
-    return;
-  }
-
-  await anotar({ tipo: 'entra', numero, texto });
-  console.log(`← ${numero}: ${texto}`);
-
-  const previo = historial.get(jid) || [];
-  const { texto: salida, via, pasarAHumano } = await responder(texto, previo);
-
-  // Leer, "escribiendo…" y una pausa al azar: así se comporta una persona.
-  try {
-    await sock.readMessages([msg.key]);
-    await sock.sendPresenceUpdate('composing', jid);
-  } catch { /* si falla la presencia, da igual: se responde igual */ }
-  await dormir(guardia.esperaHumana());
-  try { await sock.sendPresenceUpdate('paused', jid); } catch {}
-
-  await sock.sendMessage(jid, { text: salida });
-  guardia.anotaEnvio(jid);
-
-  historial.set(jid, [...previo, { role: 'user', content: texto }, { role: 'assistant', content: salida }].slice(-TURNOS));
-
-  await anotar({ tipo: 'sale', numero, texto: salida, via, pasarAHumano });
-  console.log(`→ ${numero}: ${salida.replace(/\n/g, ' ⏎ ')}  [${via}]`);
-
-  if (pasarAHumano) {
-    guardia.silenciar(jid);
-    if (yo) {
-      await sock.sendMessage(yo, {
-        text: `🔔 Te necesitan en WhatsApp\n\nDe: +${numero}\nDijo: "${texto}"\n\n` +
-              `Me callo con ese chat ${config.silencioMin} minutos.`,
-      });
-      guardia.anotaEnvio(yo);
-    }
-  }
-}
-
-async function arrancar() {
-  const { state, saveCreds } = await useMultiFileAuthState('auth');
-  const { version } = await fetchLatestBaileysVersion();
-
-  const sock = makeWASocket({
-    version,
-    auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, log) },
-    logger: log,
-    browser: Browsers.appropriate('Desktop'),
-    // No marcamos el número como "en línea": el teléfono sigue recibiendo
-    // sus notificaciones normales y tú puedes usar WhatsApp como siempre.
-    markOnlineOnConnect: false,
-    syncFullHistory: false,
-  });
-
-  sock.ev.on('creds.update', saveCreds);
-
-  sock.ev.on('connection.update', async (u) => {
-    const { connection, lastDisconnect, qr } = u;
-
-    if (qr) {
-      console.log('\nEscanea esto desde el teléfono del número que vas a usar:');
-      console.log('WhatsApp → Ajustes → Dispositivos vinculados → Vincular dispositivo\n');
-      qrcode.generate(qr, { small: true });
-    }
-
-    if (connection === 'open') {
-      yo = jidNormalizedUser(sock.user?.id);
-      console.log(`\n✓ Conectado como +${numeroDe(yo)} (${sock.user?.name || 'sin nombre'})`);
-      console.log('  Órdenes desde tu teléfono, en cualquier chat: /pausa  /sigue  /mudo  /estado');
-      avisos().forEach((a) => console.log(`  ⚠ ${a}`));
-      console.log('');
-    }
-
-    if (connection === 'close') {
-      const codigo = new Boom(lastDisconnect?.error)?.output?.statusCode;
-      if (codigo === DisconnectReason.loggedOut) {
-        console.log('\nLa sesión se cerró desde el teléfono. Borra la carpeta auth/ y vuelve a escanear:');
-        console.log('  npm run desvincular && npm start\n');
-        process.exit(0);
+  async function orden(jid, texto) {
+    switch (texto.toLowerCase().split(/\s+/)[0]) {
+      case '/pausa':  pausado = true;  await enviar(jid, 'Todos los bots en pausa. /sigue para volver.'); return true;
+      case '/sigue':  pausado = false; await enviar(jid, 'Bots activos otra vez.'); return true;
+      case '/mudo':
+        C.silenciar(negocio.id, jid, config.silencioMin);
+        await enviar(jid, `Me callo aquí ${config.silencioMin} minutos. Habla tú.`);
+        return true;
+      case '/estado': {
+        const e = guardia.estado();
+        const n = negocios(db).activos();
+        await enviar(jid,
+          `${pausado ? 'EN PAUSA' : 'Activo'} · ${negocio.nombre}\n` +
+          `Negocios conectados: ${n.length}\n` +
+          `Enviados esta hora: ${e.enviadosUltimaHora}/${e.topeGlobalHora}\n` +
+          `Contactos en esta sesión: ${e.contactos}\n` +
+          `IA: ${descripcion()}`);
+        return true;
       }
-      console.log(`Conexión caída (${codigo || 'sin código'}). Reconectando en 5 s…`);
-      await dormir(5000);
-      arrancar();
+      default: return false;
     }
-  });
+  }
 
-  sock.ev.on('messages.upsert', async ({ messages, type }) => {
-    if (type !== 'notify') return;   // 'append' es historial viejo, no se contesta
-    for (const msg of messages) {
-      try {
-        await atender(sock, msg);
-      } catch (e) {
-        console.error('[atender]', e.message);
-        await anotar({ tipo: 'error', detalle: e.message });
+  async function atender(msg) {
+    const jid = msg.key.remoteJid;
+    if (!jid || isJidGroup(jid) || isJidBroadcast(jid) || jid === 'status@broadcast') return;
+    const texto = textoDe(msg);
+    if (!texto) return;
+
+    // --- Mensajes tuyos ---
+    if (msg.key.fromMe) {
+      if (mios.has(msg.key.id)) return;              // lo mandó el bot, no tú
+      if (texto.startsWith('/')) { await orden(jid, texto); return; }
+
+      // Respondiste a mano. Eso es exactamente de lo que aprende.
+      M.anotar(negocio.id, jid, 'humano', texto);
+      C.silenciar(negocio.id, jid, config.silencioMin);   // estás tú, el bot se aparta
+      const aprendido = capturar(db, negocio.id, jid, texto);
+      if (aprendido) di(`aprendido de ti → "${aprendido.pregunta.slice(0, 44)}…"  [#${aprendido.id}]`);
+      return;
+    }
+
+    // --- Mensajes de un cliente ---
+    const numero = numeroDe(jid);
+    guardia.marcarEntrante(jid);
+    C.tocar(negocio.id, jid, msg.pushName || '');
+    M.anotar(negocio.id, jid, 'cliente', texto);
+    di(`← ${numero}: ${texto}`);
+
+    if (pausado) return;
+    if (C.estaSilenciado(negocio.id, jid)) { di(`· ${numero}: callado, estás tú en ese chat`); return; }
+
+    const permiso = guardia.permite(jid, numero);
+    if (!permiso.ok) { di(`· ${numero}: ignorado (${permiso.motivo})`); return; }
+
+    const { texto: salida, via, pasarAHumano } = await responder(db, negocio, jid, texto);
+
+    try {
+      await sock.readMessages([msg.key]);
+      await sock.sendPresenceUpdate('composing', jid);
+    } catch {}
+    await dormir(guardia.esperaHumana());
+    try { await sock.sendPresenceUpdate('paused', jid); } catch {}
+
+    await enviar(jid, salida);
+    M.anotar(negocio.id, jid, 'bot', salida, via);
+    di(`→ ${numero}: ${salida.replace(/\n/g, ' ⏎ ')}  [${via}]`);
+
+    if (pasarAHumano) {
+      C.silenciar(negocio.id, jid, config.silencioMin);
+      if (yo) {
+        await enviar(yo, `🔔 ${negocio.nombre} — te necesitan\n\nDe: +${numero}\n` +
+                         `Dijo: "${texto}"\n\nResponde tú aquí: lo que escribas me lo aprendo.`);
       }
     }
-  });
+  }
+
+  async function conectar() {
+    const { state, saveCreds } = await useMultiFileAuthState(`auth/${negocio.numero}`);
+    const { version } = await fetchLatestBaileysVersion();
+
+    sock = makeWASocket({
+      version,
+      auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, log) },
+      logger: log,
+      browser: Browsers.appropriate('Desktop'),
+      markOnlineOnConnect: false,
+      syncFullHistory: false,
+    });
+
+    sock.ev.on('creds.update', saveCreds);
+
+    sock.ev.on('connection.update', async (u) => {
+      const { connection, lastDisconnect, qr } = u;
+
+      if (qr) {
+        console.log(`\n── ${negocio.nombre} · +${negocio.numero} ──`);
+        console.log('Escanea desde ESE teléfono: Ajustes → Dispositivos vinculados → Vincular\n');
+        qrcode.generate(qr, { small: true });
+      }
+
+      if (connection === 'open') {
+        yo = jidNormalizedUser(sock.user?.id);
+        const conectado = numeroDe(yo);
+        if (conectado !== negocio.numero) {
+          di(`⚠ Escaneaste +${conectado}, pero este negocio está guardado como +${negocio.numero}.`);
+          di(`  Corrige el número o desvincula: rm -rf auth/${negocio.numero}`);
+        }
+        di(`✓ conectado como +${conectado}`);
+      }
+
+      if (connection === 'close') {
+        const codigo = new Boom(lastDisconnect?.error)?.output?.statusCode;
+        if (codigo === DisconnectReason.loggedOut) {
+          di(`sesión cerrada desde el teléfono. Para volver: rm -rf auth/${negocio.numero} && npm start`);
+          return;
+        }
+        di(`conexión caída (${codigo || '?'}), reintento en 5 s`);
+        await dormir(5000);
+        conectar();
+      }
+    });
+
+    sock.ev.on('messages.upsert', async ({ messages, type }) => {
+      if (type !== 'notify') return;
+      for (const msg of messages) {
+        try { await atender(msg); }
+        catch (e) { console.error(`[${etiqueta}] ${e.message}`); }
+      }
+    });
+  }
+
+  return { conectar };
 }
 
-console.log(`\n${config.negocio} · WhatsApp`);
-console.log('El bot solo responde a quien escribe primero. Nunca inicia una conversación.\n');
-arrancar().catch((e) => {
-  console.error('No pudo arrancar:', e.message);
-  process.exit(1);
-});
+// ---------------------------------------------------------------- arranque
+
+const activos = negocios(db).activos();
+
+console.log('\nWhatsApp · varios negocios en un solo sitio');
+console.log('Solo responde a quien escribe primero. Nunca inicia una conversación.');
+console.log(`IA: ${descripcion()}\n`);
+
+if (!activos.length) {
+  console.log('No hay ningún negocio dado de alta todavía. Empieza por:\n');
+  console.log('  node src/gestionar.js añadir "NEXO" 5354056173 "Automatización, IA y software" "" "https://nexo-plan-veci.vercel.app"\n');
+  process.exit(0);
+}
+
+console.log(`${activos.length} negocio(s): ${activos.map((n) => `${n.nombre} (+${n.numero})`).join(', ')}`);
+console.log('Órdenes desde tu teléfono, en cualquier chat: /pausa  /sigue  /mudo  /estado\n');
+
+for (const n of activos) sesion(n).conectar();

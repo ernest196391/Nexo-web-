@@ -36,16 +36,9 @@ for (let i = 1; i <= 5; i++) {
   g4.marcarEntrante(j);
   if (p(g4, j, `5350000${i}`, `contacto nº${i}`, i <= 4)) g4.anotaEnvio(j);
 }
+// El silencio (cuando estás tú atendiendo un chat) ya no vive aquí: pasó a la
+// base de datos para que sobreviva a los reinicios. Se comprueba en cerebro.prueba.mjs.
 
-console.log('\n== silencio tras pasar a una persona ==');
-const g5 = crearGuardia({ ...base, topeContactoHora: 99, topeGlobalHora: 99 });
-g5.marcarEntrante(A);
-p(g5, A, '5354056173', 'antes de silenciar', true);
-g5.silenciar(A, 30);
-p(g5, A, '5354056173', 'silenciado', false);
-const g6 = crearGuardia({ ...base, topeContactoHora: 99, topeGlobalHora: 99 });
-g6.marcarEntrante(A); g6.silenciar(A, -1);   // silencio ya vencido
-p(g6, A, '5354056173', 'silencio vencido', true);
 
 console.log('\n== espera al azar ==');
 const e = Array.from({ length: 8 }, () => g1.esperaHumana());

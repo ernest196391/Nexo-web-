@@ -1,162 +1,112 @@
-import Anthropic from '@anthropic-ai/sdk';
-import { config } from './config.js';
+import { datos, mensajes } from './db.js';
+import { buscar, marcarUsado } from './aprendizaje.js';
+import { UMBRAL_DIRECTO, UMBRAL_SIN_REVISAR, UMBRAL_EJEMPLO } from './umbrales.js';
+import { hayIA, preguntar, porQueNoHayIA } from './proveedor.js';
 
-// Lo que el bot sabe del negocio. Cambiar esto cambia lo que contesta:
-// no hace falta tocar el código para adaptarlo a otro cliente.
-const NEGOCIO = `
-${config.negocio} convierte negocios en sistemas que venden, atienden y operan solos.
+// Decide qué contestar, en este orden:
+//   1. ¿Ya respondiste tú algo casi idéntico? → se usa tu respuesta tal cual.
+//   2. ¿Hay IA disponible? → responde, copiando tu forma de hablar.
+//   3. Si no → se calla y te avisa. Y cuando contestes, lo aprende.
+//
+// El orden importa: tu respuesta real siempre gana sobre lo que invente la IA.
 
-Qué hacemos:
-- Tiendas online y webs que venden
-- Ventas y atención por WhatsApp, automatizadas
-- Agentes con inteligencia artificial
-- Aplicaciones y sistemas a medida
+const MARCA_HUMANO = '[PASAR A HUMANO]';
 
-Planes:
-- Starter: $250 de instalación, $125/mes + 10% de comisión. Catálogo con carrito,
-  WhatsApp automatizado 24/7 y soporte. Para quien arranca a vender online.
-- Growth: $500 de instalación, $150/mes + 8%. Todo lo de Starter, más puente de
-  cobro (la familia paga desde el exterior) y control de entregas.
-- Full: $900 de instalación, $250/mes + 6%. Todo lo de Growth, más avatar con IA,
-  contenido automatizado y apps a medida.
-Si el caso no encaja en ninguno, se arma algo a medida.
+function fichaDelNegocio(db, negocio) {
+  const lista = datos(db).lista(negocio.id);
+  const partes = [`Negocio: ${negocio.nombre}`];
+  if (negocio.descripcion) partes.push(negocio.descripcion);
+  if (negocio.web) partes.push(`Web: ${negocio.web}`);
+  if (lista.length) {
+    partes.push('\nDatos:');
+    for (const d of lista) partes.push(`- ${d.clave}: ${d.valor}`);
+  }
+  return partes.join('\n');
+}
 
-Web: ${config.web}
-`.trim();
+function instrucciones(negocio, ejemplos) {
+  const tono = negocio.tono?.trim()
+    || 'Directo y cálido, de tú. Nada corporativo.';
 
-const INSTRUCCIONES = `
-Eres quien atiende el WhatsApp de ${config.negocio}. Hablas con dueños de
-negocios en Cuba, por mensaje de texto.
+  let txt = `Atiendes el WhatsApp de ${negocio.nombre}. Hablas por mensaje de texto.
 
-Cómo escribes:
-- En español, de tú, directo y cálido. Nada de corporativo.
+Cómo escribes: ${tono}
 - Corto: dos o tres frases. Es WhatsApp, no un correo.
 - Una sola pregunta por mensaje, y solo si de verdad hace falta.
 - Sin emojis, salvo que la persona los use primero.
-- Nunca digas que eres una IA ni un bot, pero tampoco digas que eres una persona.
-  Si te lo preguntan directo: "es un asistente automático de ${config.negocio}".
+- Nunca digas que eres una IA. Si te lo preguntan directo, di que eres un
+  asistente automático de ${negocio.nombre}.
 
-Qué haces:
-- Respondes lo que preguntan usando SOLO lo que sabes del negocio.
-- Si preguntan algo que no sabes (un precio distinto, un plazo, un caso raro),
-  no te lo inventes: di que lo confirma una persona y que escribes enseguida.
-- Si quieren empezar, pide lo mínimo: qué vende y qué le está costando más hoy.
+Reglas:
+- Responde SOLO con los datos del negocio que tienes abajo.
+- Si te preguntan algo que no aparece ahí (un precio distinto, un plazo, una
+  excepción), NO te lo inventes: di que lo confirma una persona enseguida.
+- Cuando haga falta una persona (se quejan, negocian, piden hablar con alguien,
+  o la cosa se enreda), termina con esta línea sola: ${MARCA_HUMANO}`;
 
-Cuando haga falta una persona (piden hablar con alguien, se quejan, negocian
-precio, o la cosa se enreda), termina tu mensaje con la línea exacta:
-[PASAR A HUMANO]
-Esa línea se borra antes de enviar. Escríbela sola, en la última línea.
-`.trim();
-
-const RESPUESTAS = [
-  {
-    nombre: 'saludo',
-    prueba: /^(hola|buenas|buenos dias|buenas tardes|buenas noches|hey|ola|saludos)\b/,
-    texto: () =>
-      `Hola, soy de ${config.negocio}. Hacemos que un negocio venda y atienda solo: ` +
-      `tienda online, WhatsApp automatizado, agentes con IA y apps a medida.\n\n` +
-      `¿Qué vendes tú?`,
-  },
-  {
-    nombre: 'precios',
-    prueba: /\b(precio|precios|cuanto cuesta|cuanto vale|cuanto es|tarifa|plan|planes|cobran|costo)\b/,
-    texto: () =>
-      `Tenemos tres planes:\n\n` +
-      `Starter — $250 de instalación y $125/mes + 10%. Catálogo con carrito y WhatsApp automatizado.\n` +
-      `Growth — $500 y $150/mes + 8%. Suma puente de cobro desde el exterior y control de entregas.\n` +
-      `Full — $900 y $250/mes + 6%. Suma IA y apps a medida.\n\n` +
-      `¿Qué vendes? Así te digo cuál te sirve de verdad.`,
-  },
-  {
-    nombre: 'que hacen',
-    prueba: /\b(que hacen|que hacts|a que se dedican|en que consiste|que ofrecen|servicios|que es)\b/,
-    texto: () =>
-      `Cuatro cosas: tiendas online que venden, WhatsApp que atiende y toma pedidos solo, ` +
-      `agentes con inteligencia artificial y apps a medida.\n\n` +
-      `Puedes ver casos reales aquí: ${config.web}`,
-  },
-  {
-    nombre: 'web',
-    prueba: /\b(web|pagina|sitio|link|enlace|catalogo)\b/,
-    texto: () => `Aquí está todo, con los negocios que ya hicimos: ${config.web}`,
-  },
-  {
-    nombre: 'humano',
-    prueba: /\b(hablar con|una persona|humano|alguien|llamar|llamada|atiendeme)\b/,
-    pasarAHumano: true,
-    texto: () => `Claro. Ya le aviso a alguien del equipo y te escribe enseguida por aquí.`,
-  },
-];
-
-const normaliza = (t) =>
-  t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
-
-const cliente = config.apiKey ? new Anthropic({ apiKey: config.apiKey }) : null;
+  if (ejemplos.length) {
+    txt += `\n\nAsí ha respondido el dueño a preguntas parecidas. Copia su forma\n`
+         + `de hablar y, si el dato sirve, su contenido:\n`;
+    for (const e of ejemplos) {
+      txt += `\nCliente: ${e.pregunta}\nDueño: ${e.respuesta}\n`;
+    }
+  }
+  return txt;
+}
 
 /**
- * Decide qué contestar.
- * Devuelve { texto, via: 'regla'|'ia'|'reserva', pasarAHumano: boolean }.
+ * @returns {{texto:string, via:string, pasarAHumano:boolean}}
  */
-export async function responder(mensaje, historial = []) {
-  const limpio = normaliza(mensaje);
+export async function responder(db, negocio, jid, texto) {
+  const candidatos = buscar(db, negocio.id, texto, 3);
+  const mejor = candidatos[0];
 
-  for (const r of RESPUESTAS) {
-    if (r.prueba.test(limpio)) {
-      return { texto: r.texto(), via: `regla:${r.nombre}`, pasarAHumano: !!r.pasarAHumano };
+  // 1. Tu propia respuesta, si la pregunta es prácticamente la misma.
+  if (mejor) {
+    const umbral = mejor.estado === 'aprobado' ? UMBRAL_DIRECTO : UMBRAL_SIN_REVISAR;
+    if (mejor.parecido >= umbral) {
+      marcarUsado(db, mejor.id);
+      return {
+        texto: mejor.respuesta,
+        via: `aprendido:${mejor.id}:${mejor.parecido.toFixed(2)}:${mejor.estado}`,
+        pasarAHumano: false,
+      };
     }
   }
 
-  if (!cliente) {
-    return {
-      texto:
-        `Déjame que te responda bien esto en un momento — te escribe alguien del equipo enseguida.\n\n` +
-        `Mientras, aquí está todo lo que hacemos: ${config.web}`,
-      via: 'reserva',
-      pasarAHumano: true,
-    };
+  // 2. La IA, con tus respuestas parecidas delante como ejemplo.
+  if (hayIA()) {
+    const ejemplos = candidatos.filter((c) => c.parecido >= UMBRAL_EJEMPLO);
+    const historial = mensajes(db).ultimos(negocio.id, jid, 8)
+      .filter((m) => m.texto !== texto)
+      .map((m) => ({ role: m.autor === 'cliente' ? 'user' : 'assistant', content: m.texto }));
+
+    try {
+      let salida = await preguntar({
+        sistema: `${instrucciones(negocio, ejemplos)}\n\n---\n\n${fichaDelNegocio(db, negocio)}`,
+        conversacion: [...historial, { role: 'user', content: texto }],
+      });
+      const pasar = salida.includes(MARCA_HUMANO);
+      salida = salida.split(MARCA_HUMANO).join('').trim();
+      if (!salida) return aHumano(negocio, 'ia:vacia');
+      ejemplos.forEach((e) => marcarUsado(db, e.id));
+      return { texto: salida, via: `ia:${ejemplos.length}ej`, pasarAHumano: pasar };
+    } catch (e) {
+      console.error(`[${negocio.nombre}] IA falló:`, e.message);
+      return aHumano(negocio, `ia:error:${e.status || ''}${e.message.slice(0, 60)}`);
+    }
   }
 
-  try {
-    const respuesta = await cliente.messages.create({
-      model: config.modelo,
-      max_tokens: 400,              // es WhatsApp: respuestas cortas a propósito
-      output_config: { effort: 'low' },
-      system: [
-        { type: 'text', text: `${INSTRUCCIONES}\n\n---\n\n${NEGOCIO}`, cache_control: { type: 'ephemeral' } },
-      ],
-      messages: [...historial, { role: 'user', content: mensaje }],
-    });
+  // 3. Sin IA y sin nada parecido aprendido: se calla y avisa.
+  //    No es un fallo, es el mecanismo: tú respondes y el bot lo aprende.
+  return aHumano(negocio, `sin_respuesta:${porQueNoHayIA() || 'nada parecido aprendido'}`);
+}
 
-    if (respuesta.stop_reason === 'refusal') {
-      return { texto: 'Prefiero que esto te lo conteste una persona. Te escriben enseguida.', via: 'ia:rechazo', pasarAHumano: true };
-    }
-
-    let texto = respuesta.content
-      .filter((b) => b.type === 'text')
-      .map((b) => b.text)
-      .join('\n')
-      .trim();
-
-    const pasar = texto.includes('[PASAR A HUMANO]');
-    texto = texto.replace(/\[PASAR A HUMANO\]/g, '').trim();
-
-    if (!texto) {
-      return { texto: 'Te responde una persona enseguida.', via: 'ia:vacia', pasarAHumano: true };
-    }
-    return { texto, via: 'ia', pasarAHumano: pasar };
-  } catch (e) {
-    // Si la IA falla, el bot no se cae: pasa la conversación y sigue vivo.
-    let detalle = e.message;
-    if (e instanceof Anthropic.AuthenticationError) detalle = 'clave de API inválida';
-    else if (e instanceof Anthropic.RateLimitError) detalle = 'límite de peticiones alcanzado';
-    else if (e instanceof Anthropic.APIConnectionError) detalle = 'no se pudo conectar con la API';
-    else if (e instanceof Anthropic.APIError) detalle = `error ${e.status} de la API`;
-    console.error('[cerebro]', detalle);
-
-    return {
-      texto: `Se me trabó la respuesta. Te escribe alguien del equipo enseguida.`,
-      via: `error:${detalle}`,
-      pasarAHumano: true,
-    };
-  }
+function aHumano(negocio, via) {
+  const web = negocio.web ? `\n\nMientras, aquí está todo: ${negocio.web}` : '';
+  return {
+    texto: `Déjame confirmarte eso bien — te escribe alguien enseguida por aquí.${web}`,
+    via,
+    pasarAHumano: true,
+  };
 }
