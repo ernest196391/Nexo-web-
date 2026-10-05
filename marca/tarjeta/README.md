@@ -53,7 +53,7 @@ mejor al tacto. Cartulina de 300–350 g.
 
 ## El QR
 
-Lleva a `https://nexo-plan-veci.vercel.app`.
+Lleva a `https://automatizacion.nexocuba.com`.
 
 Está generado con corrección de errores alta y un hueco en el centro para la
 marca, y se comprobó que se lee a 24 mm impreso, de lejos, borroso, inclinado y

@@ -10,7 +10,7 @@ const entero = (v, porDefecto) => {
 
 export const config = {
   negocio: process.env.NEGOCIO || 'NEXO',
-  web: process.env.WEB || 'https://nexo-plan-veci.vercel.app',
+  web: process.env.WEB || 'https://automatizacion.nexocuba.com',
 
   // Vacía = responde a cualquiera. Con números = solo a esos.
   listaBlanca: numeros(process.env.LISTA_BLANCA),

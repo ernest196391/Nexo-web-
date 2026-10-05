@@ -5,7 +5,7 @@ import numpy as np, cv2
 from PIL import Image, ImageFilter
 from qr import matriz, URL, QUIET
 
-DESTINO = "https://nexo-plan-veci.vercel.app"
+DESTINO = "https://automatizacion.nexocuba.com"
 
 def png(hueco=0.0, mm=22.0, dpi=300, escala=1):
     m, _ = matriz()
