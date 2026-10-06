@@ -72,7 +72,7 @@ Da de alta tu primer negocio:
 npm run gestionar añadir "NEXO" 5354056173 \
   "Automatización, IA y software para negocios" \
   "Directo y cálido, de tú" \
-  "https://nexo-plan-veci.vercel.app"
+  "https://automatizacion.nexocuba.com"
 ```
 
 Ponle lo que tiene que saber:

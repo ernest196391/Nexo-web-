@@ -194,7 +194,7 @@ console.log(`IA: ${descripcion()}\n`);
 
 if (!activos.length) {
   console.log('No hay ningún negocio dado de alta todavía. Empieza por:\n');
-  console.log('  node src/gestionar.js añadir "NEXO" 5354056173 "Automatización, IA y software" "" "https://nexo-plan-veci.vercel.app"\n');
+  console.log('  node src/gestionar.js añadir "NEXO" 5354056173 "Automatización, IA y software" "" "https://automatizacion.nexocuba.com"\n');
   process.exit(0);
 }
 
