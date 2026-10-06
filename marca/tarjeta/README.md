@@ -59,9 +59,14 @@ Está generado con corrección de errores alta y un hueco en el centro para la
 marca, y se comprobó que se lee a 24 mm impreso, de lejos, borroso, inclinado y
 con la compresión de la cámara de un teléfono (`fuente/probar_qr.py`).
 
-**Si cambia el dominio**, el QR impreso sigue funcionando porque la dirección de
-Vercel no se cae. Pero para la siguiente tirada hay que regenerarlo: cambia la
-constante `URL` en `fuente/qr.py` y vuelve a generar todo (ver abajo).
+**Las tarjetas impresas antes del 6 de octubre de 2026 llevan el QR viejo**, el
+que apunta a `nexo-plan-veci.vercel.app`. Siguen funcionando: esa dirección no
+se cae y Vercel sirve el mismo sitio. Pero las que imprimas desde ahora llevan
+ya el dominio propio.
+
+**Si vuelve a cambiar el dominio**: cambia la constante `URL` en `fuente/qr.py`
+y regenera (ver abajo). `probar_qr.py` lee esa misma constante, así que la
+comprobación no se puede quedar atrás.
 
 ## Qué hay en cada carpeta
 

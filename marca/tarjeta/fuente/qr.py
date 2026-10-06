@@ -5,7 +5,7 @@ from qrcode.constants import ERROR_CORRECT_H
 # cabe en 33x33 modulos en lugar de 37x37, asi cada modulo se imprime mas
 # grande y el codigo aguanta mejor una camara mediocre. El host de una URL
 # no distingue mayusculas, asi que abre exactamente la misma pagina.
-URL = "HTTPS://NEXO-PLAN-VECI.VERCEL.APP"
+URL = "HTTPS://AUTOMATIZACION.NEXOCUBA.COM"
 QUIET = 4  # zona de silencio obligatoria por la norma
 
 def matriz(datos=URL):

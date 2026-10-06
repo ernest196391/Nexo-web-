@@ -3,8 +3,10 @@
 # compresion JPEG). Si falla aqui, falla en la calle.
 import io, numpy as np, cv2
 from PIL import Image, ImageFilter
+from qr import URL as URL_OK   # se lee de qr.py, no se repite a mano: tenerla
+                               # escrita dos veces es como acabo apuntando al
+                               # dominio viejo cuando se cambio el bueno.
 
-URL_OK = "HTTPS://NEXO-PLAN-VECI.VERCEL.APP"
 im = Image.open("tarjeta-nexo-dorso-300ppp.png").convert("RGB")
 
 # El QR ocupa 24 mm; se recorta con holgura por la mitad derecha de la tarjeta.
