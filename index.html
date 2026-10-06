@@ -3,419 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEXO · Sistemas que venden, atienden y operan solos</title>
-<meta name="description" content="Convertimos tu negocio en un sistema que vende, atiende y opera solo. Ya lo hicimos para Casa Viva, Mercado 23 y 28, Cuyana y Zaldívar.">
-<meta name="theme-color" content="#05070D">
+<title>NEXO · Del producto al cliente, todo conectado</title>
+<meta name="description" content="NEXO conecta los productos, las ventas y las operaciones de tu negocio. Catálogo, caja que vende sin internet, inventario y pedidos, desde el teléfono.">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="canonical" href="https://automatizacion.nexocuba.com">
-<link rel="icon" href="assets/logo-nexo-icon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/icons-app/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="assets/icons-app/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="assets/marca/nexo-icono-app.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icons-app/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="apple-mobile-web-app-title" content="NEXO">
 <meta name="application-name" content="NEXO">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="NEXO — Automatización, IA y software para negocios">
-<meta property="og:description" content="Diseñamos, digitalizamos y automatizamos empresas con software e inteligencia artificial adaptados a cómo realmente trabajan.">
+<meta property="og:title" content="NEXO · Del producto al cliente, todo conectado">
+<meta property="og:description" content="Catálogo, caja que vende sin internet, inventario y pedidos. Para comercios de Cuba que trabajan desde el teléfono.">
 <meta property="og:url" content="https://automatizacion.nexocuba.com">
 <meta property="og:locale" content="es_CU">
-<meta property="og:image" content="https://automatizacion.nexocuba.com/assets/icons-app/og-nexo.jpg">
+<meta property="og:image" content="https://automatizacion.nexocuba.com/assets/marca/og-nexo.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="NEXO — Convertimos tu negocio en un sistema que vende, atiende y opera solo.">
-
-<!-- Twitter -->
+<meta property="og:image:alt" content="NEXO · Del producto al cliente, todo conectado">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NEXO — Automatización, IA y software para negocios">
-<meta name="twitter:image" content="https://automatizacion.nexocuba.com/assets/icons-app/og-nexo.jpg">
-<meta name="twitter:image:alt" content="NEXO — Convertimos tu negocio en un sistema que vende, atiende y opera solo.">
-<meta name="twitter:description" content="Diseñamos, digitalizamos y automatizamos empresas con software e inteligencia artificial adaptados a cómo realmente trabajan.">
+<meta name="twitter:image" content="https://automatizacion.nexocuba.com/assets/marca/og-nexo.png">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "NEXO",
-  "url": "https://automatizacion.nexocuba.com",
-  "description": "Empresa de transformación digital, software, automatización e inteligencia artificial para negocios.",
-  "areaServed": "CU"
-}
-</script>
-<link rel="stylesheet" href="css/scrollcraft.css">
-<style>
-/* ── La tipografía va alojada aquí: una petición a nuestro dominio en vez de
-      dos saltos a un CDN ajeno. En una conexión cubana cada handshake cuenta. */
-@font-face {
-  font-family: "Bricolage";
-  src: url("assets/fuentes/bricolage-latin.woff2") format("woff2");
-  font-weight: 400 800;
-  font-stretch: 75% 100%;
-  font-display: swap;
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
-                 U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-:root {
-  --sc-canvas:     #05070D;
-  --sc-surface:    #10182B;
-  --sc-ink:        #F2F5FB;
-  --sc-ink-soft:   #9AA7C0;
-  --sc-accent:     #3FC4F5;
-  --sc-accent-ink: #05070D;
-  --sc-font-display: "Bricolage", system-ui, sans-serif;
-  --sc-font-text: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-
-  --papel:  #F4F6FA;
-  --marino: #0A1F3D;
-}
-
-/* ── Escala de cartel. El eje de tamaño óptico de Bricolage hace el trabajo que
-      en otra tipografía haría estirarla: a 14vw ajusta las formas, no solo las
-      agranda. El tracking se aprieta conforme sube el tamaño. */
-.pz-xl, .pz-lg, .pz-md {
-  font-family: var(--sc-font-display);
-  font-weight: 800;
-  line-height: .92;
-  margin: 0;
-  text-wrap: balance;
-}
-.pz-xl { font-size: clamp(3.1rem, 13.5vw, 11rem);  letter-spacing: -.045em; font-variation-settings: "opsz" 96; }
-.pz-lg { font-size: clamp(2.3rem, 8.2vw, 6.4rem);  letter-spacing: -.035em; font-variation-settings: "opsz" 72; }
-.pz-md { font-size: clamp(1.6rem, 4.4vw, 3.2rem);  letter-spacing: -.025em; line-height: 1.02; font-variation-settings: "opsz" 40; }
-
-.pz-nota {
-  font-family: var(--sc-font-text);
-  font-size: clamp(.95rem, 1.5vw, 1.12rem);
-  line-height: 1.55;
-  color: var(--sc-ink-soft);
-  max-width: 46ch;
-  margin: 0;
-}
-.pz-pie {
-  font-family: var(--sc-font-text);
-  font-size: .78rem;
-  letter-spacing: .09em;
-  text-transform: none;
-  color: var(--sc-ink-soft);
-  margin: 0;
-}
-
-.pz-wrap {
-  width: min(100% - 2.2rem, 1180px);
-  margin-inline: auto;
-}
-
-/* ── 1 · RECONOCIMIENTO ─────────────────────────────────────────────────
-   El logotipo va compuesto dentro de la escena, a escala de composición.
-   La gramática prohíbe la barra fija de 14px, y con razón: en una página de
-   tipografía una barrita de navegación es una confesión. */
-.pz-abre { display: grid; align-content: center; gap: clamp(1.6rem, 4vh, 3rem); height: 100%; }
-.pz-marca { height: clamp(34px, 5.2vw, 62px); width: auto; }
-.pz-abre .pz-nota { max-width: 34ch; }
-
-/* ── 2 · EL COSTO ───────────────────────────────────────────────────────
-   Cada línea es más pequeña que la anterior y la última es la más pequeña de
-   todas. La forma es el cansancio: el acto se lee cuesta abajo, perdiendo
-   fuerza, igual que el día que describe. */
-.pz-costo { display: grid; gap: clamp(.9rem, 2.4vh, 1.7rem); padding-block: clamp(5rem, 14vh, 9rem); }
-.pz-costo li {
-  font-family: var(--sc-font-display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -.02em;
-  color: var(--sc-ink);
-  list-style: none;
-  max-width: 24ch;
-}
-.pz-costo li:nth-child(1) { font-size: clamp(1.9rem, 5.6vw, 4.2rem); }
-.pz-costo li:nth-child(2) { font-size: clamp(1.6rem, 4.6vw, 3.4rem); }
-.pz-costo li:nth-child(3) { font-size: clamp(1.35rem, 3.7vw, 2.7rem); }
-.pz-costo li:nth-child(4) { font-size: clamp(1.15rem, 3vw, 2.1rem); }
-.pz-costo li:nth-child(5) {
-  font-size: clamp(1rem, 2.3vw, 1.55rem);
-  color: var(--sc-ink-soft);
-  margin-top: clamp(.6rem, 2vh, 1.4rem);
-}
-
-/* ── 3 · EL GIRO Y LA PRUEBA ────────────────────────────────────────────
-   Los dos bloques comparten celda: la frase se va mientras las marcas llegan.
-   Apilados en vertical serían dos pantallas seguidas, no una sustitución. */
-.pz-giro-linea, .pz-sustituye { grid-area: 1 / 1; align-self: center; }
-.pz-giro-linea .pz-xl { max-width: 13ch; }
-.pz-sustituye { display: grid; gap: clamp(.4rem, 1.4vh, 1rem); }
-
-/* ── 4 · LA PRUEBA · movimiento firma ───────────────────────────────────
-   Las palabras vacías se deshacen y las marcas reales resuelven en su mismo
-   sitio, sobre la misma línea base. No es un reveal (que barre un elemento)
-   ni una transición del kit: es una sustitución cruzada de tipo por marca en
-   posiciones compartidas, escrita aquí y movida desde --sc-p. El motor no se
-   toca: solo se lee la propiedad que publica. */
-.pz-prueba { display: grid; grid-template-areas: "capa"; align-content: center; height: 100%; }
-.pz-niega {
-  font-family: var(--sc-font-display);
-  font-weight: 700;
-  font-size: clamp(1.55rem, 6.1vw, 5.3rem);
-  line-height: 2;
-  letter-spacing: -.03em;
-  margin: 0;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 .35em;
-}
-.pz-niega > span:first-child { color: var(--sc-ink-soft); white-space: nowrap; }
-
-/* El hueco: reserva el sitio de la palabra y aloja encima la marca. */
-.pz-hueco {
-  --l: clamp(0, (var(--sc-p, 0) - var(--d, 0)) * 5, 1);
-  position: relative;
-  display: inline-block;
-  min-width: var(--w, 7ch);
-}
-.pz-hueco .pz-palabra {
-  display: inline-block;
-  color: var(--sc-ink);
-  opacity: calc(1 - var(--l));
-  filter: blur(calc(var(--l) * 14px));
-  transform: scale(calc(1 - var(--l) * .14));
-  transform-origin: left center;
-  will-change: opacity, filter, transform;
-}
-.pz-hueco .pz-logo {
-  position: absolute;
-  left: 0;
-  bottom: -.06em;
-  height: var(--h, 1.05em);
-  width: auto;
-  object-fit: contain;
-  object-position: left bottom;
-  opacity: var(--l);
-  transform: scale(calc(.9 + var(--l) * .1));
-  transform-origin: left bottom;
-  will-change: opacity, transform;
-}
-.pz-prueba .pz-cierra { margin-top: clamp(1.4rem, 4vh, 2.8rem); }
-
-/* Sin movimiento: la prueba sale entera y las palabras vacías no aparecen.
-   Lo que importa del acto es QUÉ queda, no cómo llega. */
-@media (prefers-reduced-motion: reduce) {
-  .pz-hueco .pz-palabra { display: none; }
-  .pz-hueco .pz-logo { position: static; opacity: 1; transform: none; }
-  .pz-hueco { min-width: 0; }
-}
-
-/* ── 5 · EL ALCANCE ─────────────────────────────────────────────────────
-   Compuesto como ficha técnica, no como tarjetas. La gramática prohíbe las
-   tarjetas de cualquier tipo, y además es lo que hacía la web anterior. */
-.pz-planes { padding-block: clamp(4rem, 12vh, 8rem); display: grid; gap: clamp(2rem, 5vh, 3.4rem); }
-.pz-plan {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .5rem clamp(1.5rem, 4vw, 3rem);
-  padding-top: clamp(1.2rem, 3vh, 2rem);
-  border-top: 1px solid rgba(154, 167, 192, .22);
-}
-@media (min-width: 760px) {
-  .pz-plan { grid-template-columns: minmax(0, 7rem) minmax(0, 15rem) minmax(0, 1fr); align-items: start; }
-}
-.pz-plan h3 {
-  font-family: var(--sc-font-display);
-  font-weight: 800;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  letter-spacing: -.03em;
-  margin: 0;
-}
-.pz-cifra {
-  font-family: var(--sc-font-display);
-  font-weight: 600;
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  letter-spacing: -.01em;
-  margin: 0;
-  color: var(--sc-ink);
-  font-variant-numeric: tabular-nums;
-}
-.pz-cifra span { display: block; color: var(--sc-ink-soft); font-weight: 400; font-size: .85em; letter-spacing: 0; }
-.pz-plan p:last-child { margin: 0; }
-
-/* ── 6 · EL CIERRE ──────────────────────────────────────────────────────
-   La gramática pide que el cierre invierta la página entera: el tipo más
-   pequeño del sitio y el enlace como texto subrayado, no como botón. Después
-   de tanto volumen, el silencio es el final. El fondo se pinta aquí en vez de
-   dejarlo al drift, porque un corte a papel no es una interpolación. */
-.pz-cierre {
-  background: var(--papel);
-  color: var(--marino);
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  gap: clamp(1rem, 3vh, 1.8rem);
-  height: 100%;
-}
-.pz-cierre .pz-md { color: var(--marino); max-width: 17ch; }
-.pz-cierre .pz-nota { color: #4A5B72; }
-.pz-enlace {
-  font-family: var(--sc-font-text);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  color: var(--marino);
-  text-decoration: underline;
-  text-underline-offset: .28em;
-  text-decoration-thickness: 1px;
-}
-.pz-enlace:hover, .pz-enlace:focus-visible { text-decoration-thickness: 2px; }
-.pz-firma {
-  display: flex;
-  align-items: center;
-  gap: .9rem;
-  margin-top: clamp(1.6rem, 5vh, 3rem);
-  font-family: var(--sc-font-text);
-  font-size: .76rem;
-  color: #3E4F66;
-}
-.pz-firma img { height: 20px; width: auto; }
-
-:focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 3px; }
-.pz-cierre :focus-visible { outline-color: #0A5391; }
-</style>
+<link rel="stylesheet" href="css/nexo.css">
+<link rel="stylesheet" href="css/pagina.css">
 </head>
 <body>
 
-<span data-sc-progress></span>
-<div class="sc-grain" aria-hidden="true"></div>
+<a class="saltar" href="#contenido">Ir al contenido</a>
 
-<main id="top">
+<header class="cabecera">
+  <div class="ancho cabecera-fila">
+    <a href="./" aria-label="NEXO, inicio"><img class="marca" src="assets/marca/nexo-horizontal-tinta.svg" alt="NEXO" width="530" height="100"></a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#que-hace">Qué hace</a>
+      <a href="#productos">Productos</a>
+      <a href="implementacion.html">Implementación</a>
+    </nav>
+    <a class="btn btn--firme" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20ver%20NEXO%20para%20mi%20negocio" rel="noopener">Habla con nosotros</a>
+  </div>
+</header>
 
-  <!-- 1 · RECONOCIMIENTO · pin + kinetic. Cue en forma de saludo (tercer valor
-       0) para que el titular esté ya en pantalla en la vista de aterrizaje. -->
-  <section data-sc-act="pin" data-sc-span="2.4" data-sc-drift="#05070D">
-    <div data-sc-stage>
-      <div class="pz-wrap pz-abre">
-        <img class="pz-marca" src="assets/logo-nexo-light.svg" alt="NEXO" data-sc-cue="0 1 0 0">
-        <h1 class="pz-xl" data-sc-cue="0 .82 0" data-sc-kinetic="lines">Sin ti, no vende.</h1>
-        <p class="pz-nota" data-sc-cue="0 .86 0">Tu negocio funciona porque tú estás encima. Todo el tiempo.</p>
+<main id="contenido">
+
+  <section class="ancho heroe">
+    <div>
+      <h1 class="display-lg">Del producto al cliente, todo conectado.</h1>
+      <p class="heroe-bajada body-lg">Registras una vez. Vendes en todas partes. Desde el teléfono, con la conexión que tengas.</p>
+      <div class="heroe-acciones">
+        <a class="btn btn--brand" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20empezar%20con%20NEXO" rel="noopener">Empieza por WhatsApp</a>
+        <a class="btn btn--segundo" href="#productos">Mira los productos</a>
       </div>
+    </div>
+    <div class="bloque-amarillo">
+      <img src="assets/marca/nexo-simbolo-tinta.svg" alt="" aria-hidden="true" width="100" height="100">
     </div>
   </section>
 
-  <!-- 2 · EL COSTO · flow + in escalonado. Las líneas se acumulan. -->
-  <section class="sc-section" data-sc-act="flow" data-sc-drift="#080B14">
-    <div class="pz-wrap">
-      <ul class="pz-costo" data-sc-in data-sc-stagger="110">
-        <li>Contestas el mismo precio once veces al día.</li>
-        <li>Anotas los pedidos en una libreta que solo entiendes tú.</li>
-        <li>Un mensaje a las once de la noche. Si no respondes, compra en otro lado.</li>
-        <li>El domingo cuadras cuentas en vez de descansar.</li>
-        <li>Y lo que no haces tú, no se hace.</li>
-      </ul>
+  <section class="ancho seccion beneficios" id="que-hace">
+    <div class="beneficio">
+      <div class="beneficio-placa"><img src="assets/marca/icono-productos.svg" alt="" aria-hidden="true" width="24" height="24"></div>
+      <h2 class="title">Registras una vez. Vendes en todas partes.</h2>
+      <p>Un producto, una foto, un precio. Sale en tu catálogo, en la caja y en los pedidos.</p>
+    </div>
+    <div class="beneficio">
+      <div class="beneficio-placa"><img src="assets/marca/icono-sin-conexion.svg" alt="" aria-hidden="true" width="24" height="24"></div>
+      <h2 class="title">La caja vende sin internet.</h2>
+      <p>Se cae la conexión y sigues cobrando. Cuando vuelve, todo queda al día.</p>
+    </div>
+    <div class="beneficio">
+      <div class="beneficio-placa"><img src="assets/marca/icono-gestora.svg" alt="" aria-hidden="true" width="24" height="24"></div>
+      <h2 class="title">Vende sin comprar mercancía.</h2>
+      <p>Las gestoras venden tus productos y ganan comisión en cada venta.</p>
     </div>
   </section>
 
-  <!-- 3 · EL GIRO Y LA PRUEBA · PICO. Un solo acto, por dos razones.
-       La regla del score prohíbe el mismo dispositivo dos veces seguidas, y
-       separarlos dejaba dos actos pinneados pegados. Y al juntarlos la historia
-       mejora: la afirmación y la prueba que la sustituye son el mismo gesto.
-       Es el acto con más recorrido de la página, por margen visible.
-       El suelo está puesto desde p=0 (la frase ya se lee al entrar), así que el
-       escenario nunca aparece vacío durante el viewport que tarda en llegar. -->
-  <section data-sc-act="pin" data-sc-span="6.4" data-sc-drift="#0C1424">
-    <div data-sc-stage>
-      <div class="pz-wrap pz-prueba">
+  <section class="ancho seccion" id="productos">
+    <h2 class="title-lg titulo-seccion">Dos productos, un mismo sistema</h2>
+    <div class="productos">
 
-        <div class="pz-giro-linea" data-sc-cue="0 .30 0" data-sc-reveal="up" data-sc-reveal-at="0.02 0.16">
-          <p class="pz-xl">Un sistema no se cansa.</p>
-        </div>
+      <article class="producto producto--claro">
+        <img src="assets/marca/nexo-business-tinta.svg" alt="NEXO Business" width="1208" height="132">
+        <p class="producto-para">Para el dueño del negocio.</p>
+        <ul class="body">
+          <li>Caja que cobra con internet y sin él.</li>
+          <li>Catálogo con fotos y precios reales.</li>
+          <li>Inventario que avisa cuando queda poco.</li>
+          <li>Pedidos y entregas en un solo sitio.</li>
+          <li>Pregunta a NEXO qué se vendió y qué falta.</li>
+        </ul>
+        <a class="btn btn--segundo" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20ver%20NEXO%20Business" rel="noopener">Ver NEXO Business</a>
+      </article>
 
-        <div class="pz-sustituye" data-sc-cue="0.26 1 .12 .08">
-          <p class="pz-niega">
-            <span>No es una</span>
-            <span class="pz-hueco" style="--d:.36; --w:7.6ch; --h:1.75em">
-              <span class="pz-palabra">promesa.</span>
-              <img class="pz-logo" src="assets/brands/casa-viva-dark.webp" alt="Casa Viva" width="520" height="140" loading="lazy">
-            </span>
-          </p>
-          <p class="pz-niega">
-            <span>No es una</span>
-            <span class="pz-hueco" style="--d:.46; --w:5.2ch; --h:1.75em">
-              <span class="pz-palabra">idea.</span>
-              <img class="pz-logo" src="assets/brands/mercado-23-y-28-dark.webp" alt="Mercado 23 y 28" width="520" height="140" loading="lazy">
-            </span>
-          </p>
-          <p class="pz-niega">
-            <span>No es un</span>
-            <span class="pz-hueco" style="--d:.56; --w:7.4ch; --h:1.0em">
-              <span class="pz-palabra">ejemplo.</span>
-              <img class="pz-logo" src="assets/brands/cuyana-dark.webp" alt="Cuyana" width="520" height="140" loading="lazy">
-            </span>
-          </p>
-          <p class="pz-niega">
-            <span>No es una</span>
-            <span class="pz-hueco" style="--d:.66; --w:6.8ch; --h:.95em">
-              <span class="pz-palabra">demo.</span>
-              <img class="pz-logo" src="assets/brands/zaldivar-dark.webp" alt="Zaldívar" width="520" height="140" loading="lazy">
-            </span>
-          </p>
-          <p class="pz-nota pz-cierra" data-sc-cue="0.62 1 .10 .04">Cuatro negocios que ya trabajan así. Puedes preguntarles.</p>
-        </div>
+      <article class="producto producto--tinta">
+        <img src="assets/marca/nexo-impulsa-negativo.svg" alt="NEXO Impulsa" width="1118" height="132">
+        <p class="producto-para">Para quien vende por su cuenta.</p>
+        <ul class="body">
+          <li>Vendes productos de otros comercios.</li>
+          <li>No compras mercancía ni la guardas.</li>
+          <li>Ganas comisión en cada venta cerrada.</li>
+          <li>Mandas el pedido y el comercio lo entrega.</li>
+          <li>Ves al día lo que llevas ganado.</li>
+        </ul>
+        <a class="btn btn--sobre-tinta" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20ver%20NEXO%20Impulsa" rel="noopener">Ver NEXO Impulsa</a>
+      </article>
 
-      </div>
     </div>
   </section>
 
-  <!-- 5 · EL ALCANCE · flow. Ficha técnica, no tarjetas: la gramática las
-       prohíbe, y además son lo que hacía la web anterior. Las cifras son las
-       reales de NEXO; no hay ningún número que no se pueda enseñar. -->
-  <section class="sc-section" data-sc-act="flow" data-sc-drift="#070A11">
-    <div class="pz-wrap">
-      <div class="pz-planes" data-sc-in data-sc-stagger="90">
-        <h2 class="pz-lg">¿Se adapta a ti?</h2>
-
-        <div class="pz-plan">
-          <h3>Starter</h3>
-          <p class="pz-cifra">$250 de instalación<span>$125 al mes, más 10%</span></p>
-          <p class="pz-nota">Catálogo con carrito y WhatsApp automatizado las 24 horas. Para quien arranca a vender online.</p>
-        </div>
-
-        <div class="pz-plan">
-          <h3>Growth</h3>
-          <p class="pz-cifra">$500 de instalación<span>$150 al mes, más 8%</span></p>
-          <p class="pz-nota">Todo lo de Starter, más control de entregas y cuadre de pedidos sin cuentas a mano.</p>
-        </div>
-
-        <div class="pz-plan">
-          <h3>Full</h3>
-          <p class="pz-cifra">$900 de instalación<span>$250 al mes, más 6%</span></p>
-          <p class="pz-nota">Todo lo de Growth, más agentes con inteligencia artificial y aplicaciones a medida.</p>
-        </div>
-
-        <p class="pz-nota">¿Tu caso no encaja en ninguno? Escríbenos y armamos algo a medida.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6 · EL CIERRE · pin corto, suelo propio, cue de un valor para que nada se
-       apague antes de que termine la página. Es el último elemento del
-       documento: no hay cola muerta después. -->
-  <section data-sc-act="pin" data-sc-span="1.2">
-    <div data-sc-stage class="pz-cierre">
-      <div class="pz-wrap">
-        <p class="pz-md" data-sc-cue="0.04">Cuéntanos qué vendes y qué te está costando más.</p>
-        <p class="pz-nota" data-sc-cue="0.04" style="margin-top:1.2rem">Te respondemos por WhatsApp. Sin formularios, sin reuniones de una hora.</p>
-        <p style="margin:1.6rem 0 0" data-sc-cue="0.04">
-          <a class="pz-enlace" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20hablar%20con%20NEXO%20sobre%20mi%20negocio" rel="noopener">Escribir por WhatsApp</a>
-        </p>
-        <div class="pz-firma" data-sc-cue="0.04">
-          <img src="assets/logo-nexo-icon.svg" alt="" aria-hidden="true">
-          <span>NEXO · automatizacion.nexocuba.com · +53 5 405 6173</span>
-        </div>
-      </div>
+  <section class="ancho seccion">
+    <div class="cierre">
+      <h2 class="title-lg">Cuéntanos qué vendes.</h2>
+      <p>Te respondemos por WhatsApp. Sin formularios y sin reuniones de una hora.</p>
+      <a class="btn btn--firme" href="https://wa.me/5354056173?text=Hola%2C%20quiero%20hablar%20con%20NEXO%20sobre%20mi%20negocio" rel="noopener">Habla con nosotros</a>
     </div>
   </section>
 
 </main>
 
-<script src="js/scrollcraft.js"></script>
-<script>ScrollCraft.mount(document.body);</script>
+<footer class="pie">
+  <div class="ancho pie-fila">
+    <img class="marca" src="assets/marca/nexo-horizontal-negativo.svg" alt="NEXO" width="530" height="100">
+    <p class="pie-datos">
+      automatizacion.nexocuba.com · <a href="https://wa.me/5354056173" rel="noopener">+53 5 405 6173</a><br>
+      <a href="implementacion.html">Implementación NEXO</a>
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>

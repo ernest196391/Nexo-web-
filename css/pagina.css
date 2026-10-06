@@ -1,0 +1,194 @@
+/* Maquetación de la web de NEXO, sobre los tokens de css/nexo.css.
+   Regla del manual §11: solo var(--token), ningún hex suelto. Es lo que hace
+   que el tema oscuro funcione sin tocar nada más.
+   Las piezas de marca (logo, bloque amarillo, tarjeta de producto) usan
+   nexo-amarillo, nexo-tinta y nexo-blanco, que NO cambian con el tema. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--fuente);
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+/* Foco: 3 px en focus, separado 2 px. Manual §6. */
+:focus-visible { outline: var(--size-focus) solid var(--focus); outline-offset: 2px; }
+
+.ancho { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: var(--space-4); }
+@media (min-width: 900px) { .ancho { padding-inline: var(--space-12); } }
+
+.seccion { padding-block: var(--space-16); }
+.titulo-seccion { margin-bottom: var(--space-8); }
+
+.saltar {
+  position: absolute; left: -9999px;
+  background: var(--ink); color: var(--surface);
+  padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm);
+}
+.saltar:focus { left: var(--space-4); top: var(--space-4); z-index: 10; }
+
+/* ── Botones ──────────────────────────────────────────────────────────────
+   Rectángulos con radius-sm, nunca píldoras (manual §6). Movimiento de 180 ms,
+   dentro del rango 150–200 que pide el manual, y solo sobre el color. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--size-target);
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-sm);
+  border: var(--size-border) solid transparent;
+  text-decoration: none;
+  font-size: 16px; line-height: 20px; font-weight: 600;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+/* Una sola acción brand por pantalla. Manual §4. En esta portada es
+   "Empieza por WhatsApp", y no hay otra. */
+.btn--brand   { background: var(--brand); color: var(--on-brand); }
+.btn--firme   { background: var(--ink); color: var(--surface); }
+.btn--segundo { background: var(--surface-raised); border-color: var(--line-strong); color: var(--ink); }
+/* Sobre la tarjeta de tinta el botón secundario no puede usar los tokens de
+   superficie: esa tarjeta no se invierte con el tema y quedaría ilegible. */
+.btn--sobre-tinta { background: transparent; border-color: #6E6E6A; color: var(--nexo-blanco); }
+
+.btn--brand:hover       { background: #E6AE17; }
+.btn--firme:hover       { background: var(--ink-muted); }
+.btn--segundo:hover     { background: var(--surface-sunken); }
+.btn--sobre-tinta:hover { background: #262626; border-color: #8A8A86; }
+
+/* ── Cabecera ─────────────────────────────────────────────────────────── */
+.cabecera { border-bottom: var(--size-border) solid var(--line); background: var(--surface); }
+.cabecera-fila {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); padding-block: var(--space-3); flex-wrap: wrap;
+}
+/* 26 px de alto, como dice la ficha AppWeb. El mínimo del manual es 20. */
+.cabecera-fila .marca { height: 26px; width: auto; }
+
+/* En el teléfono el menú baja a su propia fila en vez de esconderse: sin él,
+   Implementación solo se alcanzaba desde el pie. Sin JavaScript y sin menú
+   desplegable, que es una cosa menos que pueda fallar. */
+.menu { display: flex; gap: var(--space-5); order: 3; width: 100%;
+        border-top: var(--size-border) solid var(--line); flex-wrap: wrap; }
+@media (min-width: 820px) {
+  .menu { order: 0; width: auto; border-top: 0; gap: var(--space-6); }
+}
+.menu a {
+  font-size: 16px; line-height: 20px; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+  display: inline-flex; align-items: center; min-height: var(--size-target);
+}
+.menu a:hover { color: var(--accent); }
+
+/* ── Héroe ────────────────────────────────────────────────────────────── */
+.heroe { display: grid; gap: var(--space-8); padding-block: var(--space-12) var(--space-16); }
+@media (min-width: 960px) {
+  .heroe { grid-template-columns: 1fr 1fr; gap: var(--space-12); align-items: center; }
+}
+.heroe h1 { max-width: 15ch; }
+/* La ficha AppWeb permite subir hasta 60 px en escritorio ancho. */
+@media (min-width: 1100px) { .heroe h1 { font-size: 60px; line-height: 64px; } }
+.heroe-bajada { color: var(--ink-muted); max-width: 42ch; margin-top: var(--space-5); }
+.heroe-acciones { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+
+/* El visual: bloque amarillo con el símbolo gigante recortado en tinta.
+   Es una de las cinco combinaciones que permite el manual (tinta sobre
+   amarillo). Aquí va el hueco para la foto real del comercio cuando exista. */
+.bloque-amarillo {
+  position: relative;
+  background: var(--nexo-amarillo);
+  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.bloque-amarillo img { position: absolute; width: 82%; height: auto; right: -14%; bottom: -16%; }
+
+/* ── Beneficios ───────────────────────────────────────────────────────── */
+.beneficios { display: grid; gap: var(--space-8); }
+@media (min-width: 760px) { .beneficios { grid-template-columns: repeat(3, 1fr); gap: var(--space-6); } }
+.beneficio-placa {
+  width: 48px; height: 48px;
+  display: grid; place-items: center;
+  background: var(--brand-surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+.beneficio p { color: var(--ink-muted); margin-top: var(--space-2); max-width: 36ch; }
+
+/* ── Productos ────────────────────────────────────────────────────────── */
+.productos { display: grid; gap: var(--space-6); }
+@media (min-width: 860px) { .productos { grid-template-columns: 1fr 1fr; } }
+.producto {
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+.producto--claro { background: var(--surface-raised); border: var(--size-border) solid var(--line); }
+/* Pieza de marca: usa nexo-tinta, no ink, para no invertirse en tema oscuro. */
+.producto--tinta { background: var(--nexo-tinta); color: var(--nexo-blanco); }
+.producto img { height: 24px; width: auto; align-self: flex-start; }
+.producto-para { color: var(--ink-muted); }
+.producto--tinta .producto-para { color: #C9C9C5; }
+.producto ul { display: grid; gap: var(--space-2); margin-top: var(--space-1); }
+.producto li { padding-left: 1.5em; position: relative; }
+.producto li::before {
+  content: ""; position: absolute; left: 0; top: .6em;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--nexo-amarillo);
+}
+.producto .btn { align-self: flex-start; margin-top: auto; }
+
+/* ── Cierre ───────────────────────────────────────────────────────────── */
+.cierre {
+  background: var(--surface-sunken);
+  border-radius: var(--radius-md);
+  padding: var(--space-12) var(--space-8);
+  text-align: center;
+  display: grid; justify-items: center; gap: var(--space-4);
+}
+.cierre p { color: var(--ink-muted); max-width: 44ch; }
+
+/* ── Pie ──────────────────────────────────────────────────────────────── */
+.pie { background: var(--nexo-tinta); color: var(--nexo-blanco); padding-block: var(--space-12); }
+.pie-fila { display: flex; flex-wrap: wrap; gap: var(--space-6); justify-content: space-between; align-items: center; }
+.pie .marca { height: 22px; width: auto; }
+.pie a { color: var(--nexo-blanco); }
+.pie-datos { font-size: 14px; line-height: 20px; color: #C9C9C5; }
+
+/* ── Planes, solo en Implementación ───────────────────────────────────── */
+.planes { display: grid; gap: var(--space-6); }
+@media (min-width: 900px) { .planes { grid-template-columns: repeat(3, 1fr); } }
+.plan {
+  border: var(--size-border) solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-3);
+  background: var(--surface-raised);
+}
+.plan-precio { font-variant-numeric: tabular-nums; }
+.plan-mes { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.plan ul { display: grid; gap: var(--space-2); margin-top: var(--space-2); color: var(--ink-muted); }
+.plan li { padding-left: 1.5em; position: relative; }
+.plan li::before {
+  content: ""; position: absolute; left: 0; top: .6em;
+  width: 7px; height: 7px; border-radius: 2px; background: var(--nexo-amarillo);
+}
+.plan .btn { align-self: stretch; margin-top: auto; }
+
+.aviso {
+  background: var(--accent-surface);
+  border: var(--size-border) solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex; gap: var(--space-3); align-items: flex-start;
+  margin-top: var(--space-8);
+}
+.aviso p { color: var(--ink); }
+.aviso strong { font-weight: 600; }
