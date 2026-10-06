@@ -1,0 +1,1287 @@
+{
+  "doc": {
+    "height": 10407,
+    "vh": 844,
+    "acts": [
+      "pin",
+      "flow",
+      "pin",
+      "flow",
+      "pin"
+    ],
+    "world": null
+  },
+  "report": [
+    {
+      "i": 0,
+      "y": 24,
+      "pct": 0,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Sin ti, no vende.",
+          "dir": "light-on-dark",
+          "worst": 18.43,
+          "mean": 18.43
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás enci",
+          "dir": "light-on-dark",
+          "worst": 8.3,
+          "mean": 8.3
+        }
+      ],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        },
+        {
+          "t": "Sin ti, no vende.",
+          "o": 1
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás encima. To",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2821,
+        9370
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 1,
+      "y": 251,
+      "pct": 3,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Sin ti, no vende.",
+          "dir": "light-on-dark",
+          "worst": 18.43,
+          "mean": 18.43
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás enci",
+          "dir": "light-on-dark",
+          "worst": 8.3,
+          "mean": 8.3
+        }
+      ],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        },
+        {
+          "t": "Sin ti, no vende.",
+          "o": 1
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás encima. To",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2594,
+        9143
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 2,
+      "y": 478,
+      "pct": 5,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Sin ti, no vende.",
+          "dir": "light-on-dark",
+          "worst": 18.43,
+          "mean": 18.43
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás enci",
+          "dir": "light-on-dark",
+          "worst": 8.3,
+          "mean": 8.3
+        }
+      ],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        },
+        {
+          "t": "Sin ti, no vende.",
+          "o": 1
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás encima. To",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2367,
+        8916
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 3,
+      "y": 704,
+      "pct": 7,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Sin ti, no vende.",
+          "dir": "light-on-dark",
+          "worst": 18.43,
+          "mean": 18.43
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás enci",
+          "dir": "light-on-dark",
+          "worst": 8.3,
+          "mean": 8.3
+        }
+      ],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        },
+        {
+          "t": "Sin ti, no vende.",
+          "o": 1
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás encima. To",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        2141,
+        8690
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 4,
+      "y": 931,
+      "pct": 10,
+      "settled": true,
+      "contrast": [],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        },
+        {
+          "t": "Sin ti, no vende.",
+          "o": 0.04
+        },
+        {
+          "t": "Tu negocio funciona porque tú estás encima. To",
+          "o": 0.19
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1914,
+        8463
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 5,
+      "y": 1158,
+      "pct": 12,
+      "settled": true,
+      "contrast": [],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        0,
+        1687,
+        8236
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 6,
+      "y": 1215,
+      "pct": 13,
+      "settled": true,
+      "contrast": [],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -33,
+        1630,
+        8179
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(5,7,13)"
+    },
+    {
+      "i": 7,
+      "y": 1534,
+      "pct": 16,
+      "settled": true,
+      "contrast": [],
+      "cues": [
+        {
+          "t": "",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "none"
+      ],
+      "act": "pin",
+      "stages": [
+        -352,
+        1311,
+        7860
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,18)"
+    },
+    {
+      "i": 8,
+      "y": 1853,
+      "pct": 19,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -671,
+        992,
+        7541
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(8,11,20)"
+    },
+    {
+      "i": 9,
+      "y": 2173,
+      "pct": 23,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -991,
+        672,
+        7221
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(8,11,20)"
+    },
+    {
+      "i": 10,
+      "y": 2492,
+      "pct": 26,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Un sistema no se cansa.",
+          "dir": "light-on-dark",
+          "worst": 18,
+          "mean": 18
+        }
+      ],
+      "cues": [
+        {
+          "t": "Un sistema no se cansa.",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -1310,
+        353,
+        6902
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(8,11,20)"
+    },
+    {
+      "i": 11,
+      "y": 2811,
+      "pct": 29,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Un sistema no se cansa.",
+          "dir": "light-on-dark",
+          "worst": 18,
+          "mean": 18
+        }
+      ],
+      "cues": [
+        {
+          "t": "Un sistema no se cansa.",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -1629,
+        34,
+        6583
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(8,11,20)"
+    },
+    {
+      "i": 12,
+      "y": 2936,
+      "pct": 31,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Un sistema no se cansa.",
+          "dir": "light-on-dark",
+          "worst": 18,
+          "mean": 18
+        }
+      ],
+      "cues": [
+        {
+          "t": "Un sistema no se cansa.",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 100%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -1754,
+        0,
+        6458
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(8,11,20)"
+    },
+    {
+      "i": 13,
+      "y": 3811,
+      "pct": 40,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Un sistema no se cansa.",
+          "dir": "light-on-dark",
+          "worst": 17.26,
+          "mean": 17.26
+        }
+      ],
+      "cues": [
+        {
+          "t": "Un sistema no se cansa.",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -2629,
+        0,
+        5583
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(11,17,31)"
+    },
+    {
+      "i": 14,
+      "y": 4686,
+      "pct": 49,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "No es una promesa. No es una idea. No es",
+          "dir": "light-on-dark",
+          "worst": 16.97,
+          "mean": 16.97
+        }
+      ],
+      "cues": [
+        {
+          "t": "No es una promesa. No es una idea. No es un ej",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -3504,
+        0,
+        4708
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(12,20,36)"
+    },
+    {
+      "i": 15,
+      "y": 5561,
+      "pct": 58,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "No es una promesa. No es una idea. No es",
+          "dir": "light-on-dark",
+          "worst": 16.97,
+          "mean": 16.97
+        }
+      ],
+      "cues": [
+        {
+          "t": "No es una promesa. No es una idea. No es un ej",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -4379,
+        0,
+        3833
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(12,20,36)"
+    },
+    {
+      "i": 16,
+      "y": 6436,
+      "pct": 67,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "No es una promesa. No es una idea. No es",
+          "dir": "light-on-dark",
+          "worst": 16.97,
+          "mean": 16.97
+        },
+        {
+          "t": "Cuatro negocios que ya trabajan así. Pue",
+          "dir": "light-on-dark",
+          "worst": 7.65,
+          "mean": 7.65
+        }
+      ],
+      "cues": [
+        {
+          "t": "No es una promesa. No es una idea. No es un ej",
+          "o": 1
+        },
+        {
+          "t": "Cuatro negocios que ya trabajan así. Puedes pr",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -5254,
+        0,
+        2958
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(12,20,36)"
+    },
+    {
+      "i": 17,
+      "y": 7311,
+      "pct": 76,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuatro negocios que ya trabajan así. Pue",
+          "dir": "light-on-dark",
+          "worst": 7.65,
+          "mean": 7.65
+        }
+      ],
+      "cues": [
+        {
+          "t": "No es una promesa. No es una idea. No es un ej",
+          "o": 0.27
+        },
+        {
+          "t": "Cuatro negocios que ya trabajan así. Puedes pr",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6129,
+        0,
+        2083
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(12,20,36)"
+    },
+    {
+      "i": 18,
+      "y": 7442,
+      "pct": 78,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6260,
+        -40,
+        1952
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(12,20,36)"
+    },
+    {
+      "i": 19,
+      "y": 7824,
+      "pct": 82,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -6642,
+        -422,
+        1570
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(9,13,24)"
+    },
+    {
+      "i": 20,
+      "y": 8207,
+      "pct": 86,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -7025,
+        -805,
+        1187
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 21,
+      "y": 8589,
+      "pct": 90,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -7407,
+        -1187,
+        805
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 22,
+      "y": 8972,
+      "pct": 94,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "flow",
+      "stages": [
+        -7790,
+        -1570,
+        422
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 23,
+      "y": 9354,
+      "pct": 98,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8172,
+        -1952,
+        40
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 24,
+      "y": 9398,
+      "pct": 98,
+      "settled": true,
+      "contrast": [],
+      "cues": [],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8216,
+        -1996,
+        -4
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 25,
+      "y": 9430,
+      "pct": 99,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 0.99
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 0.99
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 0.99
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 0.99
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8248,
+        -2028,
+        -36
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 26,
+      "y": 9462,
+      "pct": 99,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 1
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 1
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 1
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8280,
+        -2060,
+        -68
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 27,
+      "y": 9495,
+      "pct": 99,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 1
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 1
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 1
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8313,
+        -2093,
+        -101
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 28,
+      "y": 9527,
+      "pct": 100,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 1
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 1
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 1
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8345,
+        -2125,
+        -133
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 29,
+      "y": 9560,
+      "pct": 100,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 1
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 1
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 1
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8378,
+        -2158,
+        -166
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    },
+    {
+      "i": 30,
+      "y": 9563,
+      "pct": 100,
+      "settled": true,
+      "contrast": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costa",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formula",
+          "dir": "dark-on-light",
+          "worst": 6.42,
+          "mean": 6.42
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "dir": "dark-on-light",
+          "worst": 15.24,
+          "mean": 15.24
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53",
+          "dir": "dark-on-light",
+          "worst": 7.73,
+          "mean": 7.73
+        }
+      ],
+      "cues": [
+        {
+          "t": "Cuéntanos qué vendes y qué te está costando má",
+          "o": 1
+        },
+        {
+          "t": "Te respondemos por WhatsApp. Sin formularios, ",
+          "o": 1
+        },
+        {
+          "t": "Escribir por WhatsApp",
+          "o": 1
+        },
+        {
+          "t": "NEXO · automatizacion.nexocuba.com · +53 5 405",
+          "o": 1
+        }
+      ],
+      "clips": [],
+      "rails": [],
+      "wipes": [
+        "inset(0px 0px 0%)"
+      ],
+      "act": "pin",
+      "stages": [
+        -8381,
+        -2161,
+        -169
+      ],
+      "segs": [],
+      "custom": [],
+      "customHold": false,
+      "seg": null,
+      "segp": null,
+      "bg": "rgb(7,10,17)"
+    }
+  ],
+  "consoleErrors": [],
+  "failed": []
+}
