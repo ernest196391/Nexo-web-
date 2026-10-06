@@ -89,10 +89,20 @@ python3 -m http.server 8766 &     # el render lee los SVG por HTTP
 python3 qr.py 0.16                # QR con hueco del 16% para la marca
 node render.js                    # comprueba márgenes y saca el PDF
 python3 raster.py                 # PNG a 300 ppp exactos, sacados del PDF
-python3 entregables.py            # versiones cortadas, guías y vista previa
-python3 probar_qr.py              # comprueba que el QR se sigue leyendo
+python3 entregables.py            # escribe ya en imprimir/ y vista/
+python3 imponer.py                # las hojas con varias tarjetas
+python3 probar_qr.py              # el QR se sigue leyendo en condiciones reales
+python3 comprobar_entrega.py      # y apunta al sitio correcto EN CADA ARCHIVO
 ```
 
 `render.js` avisa si algún texto se sale del margen de seguridad o si alguna
-línea de la lista se parte en dos. Si imprime algo ahí, hay que arreglarlo antes
-de mandar nada.
+línea de la lista se parte en dos.
+
+`comprobar_entrega.py` abre uno por uno los archivos de `imprimir/`, les lee el
+QR y comprueba que apunta a donde debe. Lee los diez códigos de una hoja A4, no
+solo uno. Existe porque al cambiar de dominio se regeneró todo en la carpeta de
+trabajo sin copiarlo a `imprimir/`, y el PDF suelto se quedó con la dirección
+vieja sin que nada avisara.
+
+Si cualquiera de los dos imprime un fallo, hay que arreglarlo antes de mandar
+nada a imprimir.
